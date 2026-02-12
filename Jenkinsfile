@@ -30,7 +30,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install --legacy-peer-deps'
+                // Skip npm lifecycle scripts (so Husky prepare doesn’t run)
+                sh 'npm install --legacy-peer-deps --ignore-scripts'
             }
         }
 
@@ -40,27 +41,27 @@ pipeline {
             }
         }
 
-        stage('Deploy & Run with PM2 (1 cluster)') {
+        stage('Deploy & Run with PM2 (1 instance)') {
             steps {
                 sh '''
                     # Create deploy directory
                     mkdir -p $DEPLOY_PATH
 
-                    # Sync files excluding .git and node_modules
+                    # Sync application code without .git and node_modules
                     rsync -av --exclude=".git" --exclude="node_modules" ./ $DEPLOY_PATH/
 
                     cd $DEPLOY_PATH
 
-                    # Install only production deps
-                    npm install --production --legacy-peer-deps
+                    # Reinstall production dependencies (still skipping Husky)
+                    npm install --production --legacy-peer-deps --ignore-scripts
 
-                    # Delete old PM2
+                    # Remove existing PM2 process
                     pm2 delete "$APP_NAME" || true
 
-                    # Start with PM2 in cluster mode with only 1 instance
+                    # Start application with PM2 in single‑instance mode
                     PORT=$PORT pm2 start npm --name "$APP_NAME" -i 1 -- start
 
-                    # Save PM2 list
+                    # Save PM2 list to restore after reboot
                     pm2 save
                 '''
             }
