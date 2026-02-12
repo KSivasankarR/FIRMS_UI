@@ -40,7 +40,25 @@ pipeline {
 
         stage('Deploy & Run with PM2 Cluster') {
             steps {
-                echo "Deploying to ${DEPLOY_PATH} using PM2 cluster mode"
                 sh """
                     mkdir -p ${DEPLOY_PATH}
                     cp -r . ${DEPLOY_PATH}/
+                    cd ${DEPLOY_PATH}
+                    npm install --legacy-peer-deps
+                    pm2 delete FIRMS_UI || true
+                    pm2 start npm --name FIRMS_UI -i max -- run start
+                    pm2 save
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build & Deployment Successful'
+        }
+        failure {
+            echo 'Build Failed'
+        }
+    }
+}
