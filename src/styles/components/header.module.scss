@@ -1,0 +1,401 @@
+@import "../colors";
+%buttonStyle {
+  margin-left: 0.2%;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  // border-color: #3668a1;
+  background-color: #3668a1;
+  padding: 6px 40px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+}
+.nav{
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+  font-size: 13px;
+
+  flex-wrap: nowrap;
+
+  // width: 22%;
+
+    //height: 21px;
+
+    // background-color:#086fa5;
+
+    // border-radius: 5px;
+
+    margin: 0 5px 0 5px;
+
+    padding-left: 4px;
+
+    padding-right: 4px;
+
+    justify-content: flex-start;
+
+    padding-top: 5px;
+
+}
+.navdropdown{
+
+  color:#333333;
+
+  padding: auto;
+
+  font-weight: 400;
+
+  font-family: "Montserrat", sans-serif;
+
+  font-size: 15px;
+
+  width: 200px;
+
+}
+.tabcontainer {
+  border-bottom: 1px solid #3668a1;
+  width: 88%;
+  margin: 30px auto 0;
+  .button {
+      // @extend %buttonStyle;
+        // border: 1px solid #3668a1;
+        // border-color: #f2f2f2;
+        border: none;
+        background-color: #fff;
+        color: #3668a1;
+        // width: 150px;
+        font-size: 14px;
+        font-weight: 600;
+        // max-width: 100%;
+        margin-right: 5px;
+        padding: 6px 20px;
+        background-color: #3668a1;
+        color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+  }
+  
+ 
+  .activeButton {
+      // @extend %buttonStyle;
+      // width: 150px;
+      // max-width: 100%;
+      border: 1px solid #3668a1;
+      border-color: #3668a1;
+      border-bottom: none;
+      background-color: #fff;
+      color: #3668a1;
+      font-size: 14px;
+      padding: 6px 20px;
+        font-weight: 600;
+        margin-right: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+  }
+
+}
+.header {
+  &_body {
+    position: fixed;
+    width: 100%;
+    background: $white;
+    color: $black;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+  }
+  &_main {
+    padding: 2px 0 0;
+    &_left {
+      padding-right: 0;
+      &_cminfo {
+        padding-left: 8px;
+        h4,
+        h6 {
+          line-height: 18px;
+          color: $black;
+          margin: 0;
+          font-weight: 400;
+          font-size: 13px;
+        }
+        h4 {
+          font-weight: 700;
+          font-size: 14px;
+        }
+      }
+    }
+    &_middle {
+      &_reginfo {
+        padding-left: 8px;
+        h3,
+        h5 {
+          line-height: 20px;
+          color: $black;
+          margin: 0;
+          font-weight: 500;
+        }
+        h3 {
+          font-size: 13px;
+        }
+        div {
+          font-size: 16px;
+          font-weight: 700;
+          color: $black;
+          line-height: 20px;
+        }
+        h5 {
+          font-size: 15px;
+        }
+      }
+    }
+    &_right {
+      text-align: right;
+      padding-left: 0;
+      .right_img {
+        order: 2;
+      }
+      .header_main_left_cminfo {
+        padding: 0 8px 0 0;
+      }
+    }
+  }
+}
+
+.Mainpage_Navbar {
+  display: flex;
+  align-items: center;
+  line-height: normal;
+  height: 35px;
+  z-index: 999;
+  padding: 0 4px;
+  background-image: linear-gradient(90deg, #394c90, #27d3e0);
+  .FormBtn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .Mainpage_links {
+    font-family: "Montserrat" sans-serif;
+    line-height: 30px;
+    font-size: 14px;
+    padding: 3px 8px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+.InfoBarContainer {
+  padding-block: 4px;
+  margin-right: 6px;
+  .infoText {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .InfoTextContainer {
+    display: inline-flex;
+    vertical-align: middle;
+    .phoneText,
+    .mailText {
+      display: inline-flex;
+      align-items: center;
+    }
+    .InfoBarText {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      margin-left: 6px;
+      margin-right: 30px;
+    }
+  }
+}
+
+@media (max-width: 768px) and (max-width: 991px) {
+  .header {
+    &_main {
+      &_left {
+        padding-right: 0;
+        .left_img {
+          img {
+            width: 60px;
+          }
+        }
+        &_cminfo {
+          padding-left: 5px;
+          h4,
+          h6 {
+            font-size: 12px;
+            line-height: 16px;
+          }
+          h4 {
+            font-size: 14px;
+          }
+        }
+      }
+      &_middle {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .middle_img {
+          img {
+            width: 81px;
+          }
+        }
+        &_reginfo {
+          padding-left: 5px;
+          h3 {
+            font-size: 15px;
+          }
+          h5 {
+            font-size: 11px;
+            line-height: 16px;
+          }
+        }
+      }
+      &_right {
+        text-align: right;
+        padding-left: 10px;
+        .header_main_rightInfo {
+          justify-content: start !important;
+        }
+        .right_img {
+          img {
+            width: 60px;
+          }
+        }
+        .header_main_left_cminfo {
+          padding: 0 5px 0 0;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    &_main {
+      // max-width: 300px;
+      margin: auto;
+      padding: 12px 0 5px;
+      &_left {
+        display: none;
+        padding-right: 0;
+        .left_img {
+          img {
+            width: 60px;
+          }
+        }
+        &_cminfo {
+          padding-left: 5px;
+          h4,
+          h6 {
+            font-size: 14px;
+          }
+          h4 {
+            font-size: 14px;
+          }
+        }
+      }
+      &_middle {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .middle_img {
+          img {
+            width: 81px;
+          }
+        }
+        &_reginfo {
+          padding-left: 5px;
+          h3 {
+            font-size: 15px;
+          }
+          h5 {
+            font-size: 11px;
+          }
+        }
+      }
+      &_right {
+        display: none;
+        text-align: right;
+        padding-left: 10px;
+        .header_main_rightInfo {
+          justify-content: start !important;
+        }
+        .right_img {
+          order: inherit;
+          img {
+            width: 60px;
+          }
+        }
+        .header_main_left_cminfo {
+          padding: 0 0 0 5px;
+          text-align: left;
+        }
+      }
+    }
+  }
+  .InfoBarContainer {
+    .InfoTextContainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .InfoBarText {
+      margin-right: 0 !important;
+    }
+  }
+}
+.textContainer {
+
+  margin: 0 10px;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+.titleText {
+
+  font-family: 'Montserrat';
+
+  font-style: normal;
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+  margin: 0;
+
+}
+
+.govText {
+
+  background: url('../../../public/assets/redline.svg') no-repeat left center;
+
+  background-repeat: no-repeat;
+
+  background-position: left center;
+
+  background-size: 67px 39px;
+
+  font-size: 12px;
+
+  padding-left: 73px;
+
+  font-weight: 700;
+
+}
+
+.govtitleText {
+
+  font-size: 15px !important;
+
+}

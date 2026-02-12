@@ -1,0 +1,853 @@
+@import "../colors";
+
+.relationData {
+  position: relative;
+  padding-left: 69px;
+  box-shadow: 0px 0px 5px rgb(0 0 0 / 22%);
+
+  input {
+    border-width: 1px 1px 1px 0;
+    border-color: #aeaeae;
+    border-style: solid;
+    box-shadow: none;
+  }
+}
+
+.selectData {
+  width: 70px;
+  height: 36px;
+  background: $NavbarTextColor;
+  color: black;
+  position: absolute;
+  border-radius: 3px 0 0 3px;
+  border-width: 1px 0 1px 1px;
+  border-color: #aeaeae;
+  border-style: solid;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  padding: 4px 8px;
+  left: 0;
+  box-shadow: none;
+
+  &:disabled {
+    opacity: 1;
+    background: #d9d9d9;
+    text-transform: capitalize !important;
+  }
+}
+
+// //------------------Application List---------------------------
+// .ListviewMain {
+//     .actionbtn {
+//         vertical-align: middle;
+//         cursor: pointer;
+//         position: relative;
+
+//         .tooltiptext {
+//             visibility: hidden;
+//             width: auto;
+//             background-color: $NavbarTextColor;
+//             color: $titlecolor;
+//             border: 2px solid $titlecolor;
+//             text-align: center;
+//             border-radius: 5px;
+//             padding: 2px 5px;
+//             font-size: 12px;
+//             position: absolute;
+//             z-index: 1;
+//             top: 25px;
+//             right: -17px;
+//             margin: 20px;
+//             font-weight: 700;
+//         }
+
+//         .slotTooltip {
+//             width: 95px !important;
+//         }
+//     }
+//     .singleIcon{
+//         float: right;
+//         margin-right: 9px;
+//     }
+
+//     .actionbtn:hover .tooltiptext {
+//         visibility: visible;
+//     }
+
+//     .reportIcon {
+//         margin: 0 auto !important;
+//         display: block;
+//     }
+// }
+
+// .BacBtnContainer:hover {
+//     animation: zoom-in-zoom-out 1s ease infinite;
+// }
+
+// @keyframes zoom-in-zoom-out {
+//     0% {
+//         transform: scale(1, 1);
+//     }
+
+//     50% {
+//         transform: scale(1.2, 1.2);
+//     }
+
+//     100% {
+//         transform: scale(1, 1);
+//     }
+// }
+
+// //--------------------------Getstartedpage-----------------
+// .DocuementGen {
+//     margin: 0 auto;
+//     text-align: center;
+
+//     label {
+//         padding: 8px 10px 10px;
+//         // background: linear-gradient(90deg, rgb(46, 49, 146) 5%, rgb(27, 255, 255) 200%);
+//         margin-right: -20px;
+//         width: 442px;
+//         border-radius: 5px;
+//         color: $black;
+//         span{
+//             font-weight: 600 !important;
+//             font-size: 16px;
+//         }
+
+//         // box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3), 0 0px 3px rgba(0, 0, 0, 0.22);
+//     }
+
+//     // label:hover {
+//     //     box-shadow: 0 19px 28px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+//     // }
+// }
+
+// .getstartedContainer {
+//     margin-top: 65px !important;
+// }
+
+// .gettableContainer {
+//     padding: 15px;
+//     flex-direction: row;
+//     width: 100%;
+//     // border: 1px solid $bordercolor;
+//     box-shadow: 0px 4px 0px $titlecolor;
+//     margin-bottom: 24px;
+// }
+
+// .gettableContainer2 {
+//     padding: 15px;
+//     flex-direction: row;
+//     width: 100%;
+//     margin-bottom: 24px;
+// }
+
+// .getTitle {
+//     font-family: 'Montserrat';
+//     font-style: normal;
+//     font-weight: 700;
+//     font-size: 17px;
+//     line-height: 24px;
+//     text-align: left;
+//     color: $titlecolor;
+//     margin-bottom: 6px;
+
+//     span {
+//         display: inline-block;
+//         font-size: 15px
+//     }
+// }
+
+// .SlotText {
+//     font-family: 'Montserrat';
+//     font-style: normal;
+//     font-weight: 700;
+//     font-size: 15px;
+//     line-height: 18px;
+//     color: $dark-charcoal;
+
+//     // span {
+//     //     color: $slotcolor;
+//     // }
+// }
+
+// // Parties Page
+// .mainTabs {
+//     // background-color: $partydatabgcolor ;
+//     height: auto;
+//     padding: 10px;
+//     margin-bottom: 10px;
+
+//     .addCusText {
+//         .tabText {
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-weight: 700;
+//             font-size: 15px;
+//             line-height: 18px;
+//             color: $dark-charcoal;
+//         }
+//     }
+
+//     .ExecutantTable {
+//         thead {
+//             th {
+//                 background: $NavbarTextColor !important;
+//                 color: red !important;
+//             }
+//         }
+//     }
+// }
+
+// .innerTabContainer {
+//     textarea {
+//         height: 300px !important;
+//         text-transform: inherit !important;
+//         line-height: 23px;
+//         font-weight: 600;
+//         font-size: 13px;
+//     }
+// }
+// .TableCon{
+//     margin-bottom: 10px;
+// }
+
+// .tabText {
+//     text-align: left;
+// }
+
+// .addCusContainer {
+//     text-align: right;
+//     display: inline-flex;
+//     padding: 0;
+//     cursor: pointer;
+
+//     .addCusContainerImage {
+//         object-fit: contain;
+//     }
+// }
+
+// .innertabText {
+//     font-family: 'Montserrat';
+//     font-style: normal;
+//     font-weight: 700;
+//     font-size: 14px;
+//     line-height: 18px;
+//     color: $dark-charcoal;
+//     vertical-align: super;
+//     margin: 2px 0 0 5px;
+//     display: inline-flex;
+// }
+
+// .tableactionImg {
+//     margin: 0 5px 0 0px;
+// }
+
+// .actionbtn {
+//     display: inline-block;
+//     vertical-align: middle;
+//     margin: 0 15px 0 0;
+//     font-size: 14px;
+
+//     span {
+//         vertical-align: -4px;
+//         margin: 0 5px 0 5px !important;
+//     }
+// }
+
+// .tabText {
+//     text-align: left;
+//     margin-bottom: 0;
+//     padding: 0;
+// }
+
+// .tableactionImg {
+//     margin: 0 5px 0 0px;
+// }
+
+// .actionTitle {
+//     margin-right: 0px;
+// }
+
+// // AddExecutantDetails
+// .AddExecutantDetailxsain {
+//     margin: 20px 10px;
+
+//     input[type="text"] {
+//         text-transform: uppercase;
+//     }
+
+//     input:focus:invalid,
+//     select:focus:invalid {
+//         outline: 2px solid red;
+//     }
+// }
+
+// .AddExecutantDetailsInfo {
+//     // background-color: $addexeviewbg;
+
+//     .AddExecutantDetailsHeader {
+//         background-color: $cardheadderbg;
+//         padding: 5px 12px;
+//     }
+
+//     .tabText {
+//         color: $NavbarTextColor;
+//         vertical-align: -webkit-baseline-middle;
+//     }
+
+// }
+
+// .mainContainer {
+//     input[type="text"] {
+//         text-transform: uppercase;
+//     }
+
+//     input:focus:invalid,
+//     select:focus:invalid {
+//         outline: 2px solid red;
+//     }
+// }
+
+// // DocumentDetailsPage
+// .DocumentDetailxsain {
+//     padding: 30px 0;
+
+//     .AddExecutantInfo {
+
+//         input,
+//         textarea {
+//             // background: $viewbgcolor;
+//             border: none;
+//             box-shadow: none;
+//         }
+//     }
+// }
+
+// .Detailxsain {
+//     width: 70%;
+//     border: 2px solid red;
+// }
+
+// // AddPartyMain
+// .AddPartyMain {
+//     .AddPartyInfo {
+//         // background-color: $addexeviewbg;
+//         textarea:disabled{
+//             text-transform: uppercase !important;
+//         }
+
+//         .AddPartyDetails {
+//             background: linear-gradient(90deg, #394C91 0.86%, #27D3E0 100%);
+//             padding: 5px 17px;
+
+//             .tabText {
+//                 color: $NavbarTextColor;
+//                 vertical-align: -webkit-baseline-middle;
+//                 font-family: 'Montserrat';
+//                 font-style: normal;
+//                 font-weight: 600;
+//                 font-size: 18px;
+//                 padding-top: 5px;
+//             }
+
+//         }
+
+//         .currentcheckbox {
+//             display: flex;
+
+//             .selectbox {
+//                 margin-right: 8px;
+//             }
+//         }
+
+//         .AddPartyInfoData {
+//             padding: 20px 17px;
+//             textarea {
+//                 text-transform:capitalize !important;
+//             }
+
+//             input::placeholder {
+//                 text-transform: capitalize;
+//             }
+//         }
+//     }
+// }
+
+// .backBtn {
+//     text-align: left;
+// }
+
+// //-------------------PartiesDetailsPage----------------------
+
+// .gettableContainer {
+//     padding: 20px;
+//     flex-direction: row;
+//     width: 100%;
+//     // border: 1px solid $bordercolor;
+//     box-shadow: 0px 4px 0px $titlecolor;
+//     margin:0 0 15px;
+// }
+// .getStartedpageCon{
+//     margin-top: 0px;
+// }
+
+// .ExecutantDetailsInfo {
+//     input[type="text"] {
+//         text-transform: uppercase;
+//     }
+
+//     input:focus:invalid,
+//     select:focus:invalid {
+//         outline: 2px solid red;
+//     }
+
+//     // background: $addexeviewbg;
+
+//     .DetailsHeaderContainer {
+//         background: linear-gradient(90deg, #394C91 0.86%, #27D3E0 100%);
+//         padding: 10px 12px;
+
+//         .ContainerColumn {
+
+//             .HeaderText,
+//             .innertabText {
+//                 color: $NavbarTextColor;
+//                 vertical-align: -webkit-baseline-middle;
+//                 font-family: 'Montserrat';
+//                 font-weight: 700;
+//                 font-size: 16px;
+//                 line-height: 22px;
+//                 vertical-align: initial;
+//             }
+
+//             .HeaderText {
+//                 margin-bottom: 0;
+//             }
+
+//             .surveyText {
+//                 color: red;
+//             }
+
+//             .innertabText {
+//                 padding-left: 10px;
+//             }
+//         }
+//     }
+
+//     .AddExecutantInfo {
+//         padding: 29px 20px;
+
+//         .SlotContainer {
+//             text-align: center;
+//         }
+
+//         .SlotText {
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-weight: 700;
+//             font-size: 15px;
+//             line-height: 18px;
+//             margin-left: -10px;
+//             color: $dark-charcoal;
+//             display: block;
+
+//             // span {
+//             //     color: $slotcolor;
+//             // }
+//         }
+
+//         .SlotInfo {
+//             padding: 20px 0;
+
+//             .SlotRadiobtn {
+//                 width: auto;
+//                 height: 34px;
+//                 padding: 9px 7px;
+//                 color: #FFFFFF;
+//                 font-family: "Montserrat", sans-serif;
+//                 font-style: normal;
+//                 font-weight: 700;
+//                 margin: 0px 10px 20px 0;
+//                 font-size: 14px;
+//                 border-radius: 3px;
+//                 text-align: center;
+//                 line-height: 18px;
+//             }
+//         }
+
+//         .SlotTextColor {
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-weight: 700;
+//             font-size: 18px;
+//             line-height: 18px;
+//             color: $slotredcolor;
+//             display: block;
+//             margin: 39px 0 22px 0;
+
+//             span {
+//                 color: $slotcolor;
+//             }
+
+//             .Line {
+//                 padding: 0 12px;
+//             }
+//         }
+//     }
+// }
+
+// // PropertyDetailsmain
+// .PropertyDetailsmain {
+//     // margin-top: 15px;
+
+//     .AddExecutantInfo {
+//         .SlotText {
+//             display: contents;
+//             margin-left: 20px;
+//         }
+
+//         .HeadingText {
+//             font-size: 15px;
+//             margin-bottom: 7px;
+//         }
+
+//         .BtnContainer {
+//             text-align: left !important;
+//         }
+
+//         .ProceedContainer {
+//             text-align: right;
+
+//             .generateBtn {
+//                 padding: 9px !important;
+//                 margin-bottom: 15px !important;
+//                 margin-top: 0 !important;
+//             }
+//         }
+
+//         .StructuresInfo {
+//             border: 1px solid #cbcbcb;
+//             padding: 0;
+
+//             .StructuresHeader {
+//                 background: $titlecolor;
+//                 padding: 10px 15px;
+//             }
+
+//             .HeadText {
+//                 font-family: 'Montserrat';
+//                 font-style: normal;
+//                 font-weight: 600;
+//                 font-size: 14px;
+//                 line-height: 18px;
+//                 color: $NavbarTextColor;
+//                 margin-bottom: 0;
+//             }
+
+//             .StructuresDetails {
+//                 padding: 14px 18px;
+//                 background: $NavbarTextColor;
+//             }
+
+//         }
+
+//         .YesBtn {
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-weight: 600;
+//             font-size: 15px;
+//             line-height: 18px;
+//             color: $NavbarTextColor;
+//             background: linear-gradient(90deg, rgba(46, 49, 146, 1) 5%, rgba(27, 255, 255, 1) 200%);
+//             border: none;
+//             vertical-align: super;
+//             width: 100%;
+//             max-width: 69px;
+//             height: 38px;
+//             padding: 12px 20px;
+//             border-radius: 3px;
+//             right: 0;
+//             float: right;
+//             cursor: pointer;
+//         }
+
+//         .AddyesBtn {
+//             margin: 18px 0;
+//         }
+
+//         .AddBtn {
+//             float: 'right';
+//             margin: 20px 0;
+//             cursor: 'pointer';
+//         }
+
+//         .serchBtn {
+//             margin-top: 20px;
+//             width: 100px;
+//             padding: 0;
+//         }
+
+//         h6 {
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-weight: 700;
+//             font-size: 15px;
+//             line-height: 18px;
+//         }
+//     }
+// }
+
+// .marketValueInfo {
+//     margin: 10px auto;
+
+//     .UnitRateInto {
+//         padding: 15px;
+//     }
+
+//     .Proceedbtn {
+//         text-align: right;
+
+//         .backText {
+//             color: $dark-charcoal;
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-size: 15px;
+//             font-weight: 700;
+//             margin-right: 15px;
+//         }
+//     }
+
+// }
+
+// .RelationInfo {
+//     padding: 20px !important;
+
+//     input::placeholder {
+//         text-transform: capitalize;
+//     }
+// }
+
+// .panData {
+//     width: 102px;
+//     border-right: 1px solid #AEAEAE;
+// }
+
+// .panrelationData {
+//     padding-left: 99px !important;
+// }
+
+// .divider {
+//     height: 2px;
+//     width: 100%;
+//     background: #cbcbcb;
+//     margin: 15px 0;
+// }
+
+// .LinkDocInfo {
+//     padding-top: 20px;
+
+//     .Linkbtn {
+//         text-align: center !important;
+//     }
+// }
+
+// //ReportsViewPage
+// .ReportsViewMain {
+//     .ReportsViewContainer {
+//         border: none;
+//         height: 100%;
+//         padding: 20px;
+//         text-align: center;
+//         background: $charcolbgcolor;
+//         cursor: pointer;
+//         border-radius: 5px;
+
+//         .ReportsViewText {
+//             font-family: 'Montserrat';
+//             font-style: normal;
+//             font-weight: 700;
+//             font-size: 20px;
+//             line-height: 20px;
+//             text-align: center;
+//             color: $blacktext;
+//             padding-top: 10px;
+//             display: block;
+//             margin-bottom: 0;
+//             span{
+//                 display: block;
+//                 font-size: 16px;
+//             }
+//         }
+//     }
+
+//     .ReportsViewContainer:hover {
+//         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+//     }
+
+//     .AcknowledgContainer {
+//         background: $acknowledgbgcolor;
+//     }
+
+//     .SlipContainer {
+//         background: $bookslipbgcolor;
+//     }
+
+//     .FormContainer {
+//         background: $form60bgcolor;
+//     }
+
+//     .slotContainer {
+//         background: $reportbgcolor;
+//     }
+
+//     .DocContainer {
+//         background-color: #1AA3E3;
+//     }
+//     .teluguContainer {
+//         background-color: #95d43135;
+//     }
+// }
+
+// .ReportMainConatiner {
+//     padding-top: 30px;
+// }
+
+// //covenants
+// .covenantContainer {
+//     textarea:disabled {
+//         text-transform: capitalize !important;
+//     }
+// }
+
+// //FinishdocumentViewPage
+// .ReportsViewInfo {
+//     padding: 28px 0 10px;
+// }
+
+// .DocViewContainer {
+//     .DocText {
+//         font-family: 'Montserrat';
+//         font-style: normal;
+//         font-weight: 700;
+//         font-size: 15px;
+//         line-height: 25px;
+//         color: $dark-charcoal;
+//         text-align: center;
+//         display: block;
+//     }
+
+//     .DocImage {
+//         margin: 15px 0 !important;
+//         display: grid;
+
+//         img {
+//             object-fit: scale-down;
+//         }
+//     }
+
+// }
+
+// .FinishBtnInfo {
+//     text-align: center;
+// }
+
+// //Payment Page
+// .DocSubmitPage {
+//     width: 58%;
+//     border-radius: 5px;
+//     margin: 0 auto;
+//     padding: 20px;
+//     box-shadow: 0 3px 5px rgb(0 0 0 / 19%), 0 0px 2px rgb(0 0 0 / 23%);
+// }
+
+// .RegistrationInput {
+
+//     h2,
+//     h4 {
+//         font-family: 'Montserrat';
+//         font-style: normal;
+//         font-weight: 700;
+//         font-size: 26px;
+//         color: $titlecolor;
+//         padding: 5px;
+//         margin-bottom: 17px;
+//     }
+
+//     h4 {
+//         color: $titlecolor;
+//         font-size: 24px;
+//         padding: 0;
+
+//         span {
+//             font-size: 18px;
+//             color: $dark-charcoal;
+//             font-weight: 600;
+//         }
+//     }
+// }
+
+// //MainPageInfo
+// .MainpageInfo {
+//     width: 80%;
+//     height: auto;
+//     margin: 20px auto;
+//     border: 2px solid #3668A1;
+//     border-radius: 5px;
+
+//     h2 {
+//         font-family: 'Montserrat';
+//         font-style: normal;
+//         font-weight: 700;
+//         font-size: 30px;
+//         line-height: 18px;
+//         color: $titlecolor;
+//         padding: 60px 0;
+//         text-align: center;
+//         display: block;
+//         cursor: pointer;
+
+//     }
+
+//     .dividerLine {
+//         height: 2px;
+//         width: 100%;
+//         background: $titlecolor;
+//     }
+// }
+
+// @media all and (min-width: 768px) and (max-width: 1023px) {
+//     .actionTitle {
+//         display: flex;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .PropertyDetailxsain {
+//         .AddExecutantInfo {
+//             .MarketButton {
+//                 width: 100%;
+//                 max-width: 100%;
+//             }
+//         }
+//     }
+// }
+
+// .errTxt {
+//     font-family: 'Montserrat';
+//     font-size: 18px;
+//     font-weight: 600;
+// }
+
+// .flex-btn-box {
+//     display: flex;
+//     align-items: flex-end;
+//     justify-content: space-around;
+
+//     &>button {
+//         margin-top: 0 !important;
+//     }
+// }

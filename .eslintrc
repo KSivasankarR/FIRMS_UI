@@ -1,0 +1,51 @@
+{
+  "plugins": ["prettier"],
+  "extends": ["next", "next/core-web-vitals", "prettier"],
+  "rules": {
+    "prettier/prettier": 0,
+    "camelcase": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-unused-prop-types": "off",
+    "react/require-default-props": "off",
+    "@next/next/no-img-element":"off",
+    "prefer-const":0,
+    "@next/next/no-html-link-for-pages":"off",
+    "jsx-a11y/alt-text":"off",
+    "jsx-a11y/anchor-is-valid":"off",
+    "react/jsx-key":"off",
+    "react-hooks/rules-of-hooks":"off",
+    "react-hooks/exhaustive-deps":"off",
+    "@typescript-eslint/no-empty-function":"off",
+    "@typescript-eslint/no-unused-vars":"off",
+    "react/no-unescaped-entities":"off",
+    "import/extensions":"off",
+    "quotes": "off",
+    "no-var":0,
+    "no-undefined":0
+  },
+  "overrides": [
+    {
+      "files": "**/*.+(ts|tsx)",
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint/eslint-plugin"],
+      "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/quotes": "off",
+        "@typescript-eslint/no-unused-vars":"off",
+        "@typescript-eslint/no-empty-function":"off",
+        "@typescript-eslint/ban-types":"off",
+        "prefer-const":0,
+        "no-var":0,
+        "no-undefined":0
+      }
+    }
+  ]
+}

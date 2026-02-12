@@ -1,0 +1,2669 @@
+@import "colors";
+.societyRegSec{
+  background-color: #f2f2f2;
+  .societyRegsecInfo{
+    width: 80%;
+    margin: 20px auto 0;
+  }
+}
+.acknowledgementformInfo{
+  margin: 20px auto;
+  display: table;
+  text-align: center;
+  h3{
+    font-size: 25px;
+    font-weight: 600;
+  }
+}
+.checkboxInfo{
+  display: inline-flex;
+
+  input{
+    width: 20px;
+    height: 28px;
+  }
+    h6{
+      font-weight: 600;
+      margin-left: 5px;
+      padding-top: 5px;
+      font-size: 13px;
+    span{
+      color: red;
+    }
+  }
+}
+.datatableInfo{
+  margin: 0px auto 20px;
+}
+.actionTakenInfo{
+  margin: 0 auto 10px;
+  display: table;
+  .accpBtn{
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-left: 10px;
+  }
+}
+%buttonStyle {
+  margin-left: 0.2%;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  // border-color: #3668a1;
+  background-color: #3668a1;
+  padding: 6px 40px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.pr-1 {
+  padding-right: 0.25rem !important;
+}
+
+.pr-0 {
+  padding-right: 0rem !important;
+}
+
+.cashTxt {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+th {
+  font-size: 0.79rem;
+}
+
+.btn-primary {
+  background-color: var(--bs-btn-bg) !important;
+}
+
+//Dashboard
+.firmHomeSec {
+  position: fixed;
+  right: 0;
+  top: 230px;
+  z-index: 99999;
+  width: 250px;
+  border-radius: 3px 0 0 3px;
+
+  .firmHomeSecItem {
+    .firmHomeSecList {
+      display: block;
+      padding: 0 3px;
+      // float: left;
+      float: right;
+      background: $white;
+      box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.12);
+      width: 55px;
+      border-top: 1px solid #27d3e0;
+      border-bottom: 1px solid transparent;
+      border-left: 1px solid #27d3e0;
+      border-right: 1px solid #27d3e0;
+
+      .firmHomeSecIcon {
+        a {
+          display: block;
+          padding: 6px 3px;
+
+          img {
+            width: 40px;
+          }
+        }
+      }
+
+      .firmHomeSecInfo {
+        position: relative;
+
+        .firmHomeSecTitle {
+          display: none;
+
+          h5 {
+            margin: 0;
+            padding-bottom: 0;
+            color: #424242;
+            font-size: 14px;
+            line-height: 15px;
+
+            a {
+              padding: 0 0 0 3px;
+              display: block;
+            }
+          }
+          span{
+            font-size: 12px;
+            text-align: left;
+            padding-left: 5px;
+          }
+        }
+      }
+    }
+
+    .firmHomeSecList:hover {
+      border-radius: 5px 0 0 5px !important;
+      width: auto;
+      border-bottom-color: #27d3e0;
+
+      .firmHomeSecInfo {
+        .firmHomeSecTitle {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .firmHomeSecItem:first-child {
+    .firmHomeSecList {
+      border-radius: 5px 0 0 0;
+    }
+  }
+
+  .firmHomeSecItem:last-child {
+    .firmHomeSecList {
+      border-radius: 0 0 0 5px;
+      border-bottom-color: #27d3e0;
+    }
+  }
+
+  .firmHomeSecItem:after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
+
+
+.publicDataSec {
+  .publicdataCol {
+    margin-bottom: 8px;
+    .publicDataImg{
+      .normalImg,.hoverImg{
+        margin-top: 30px;
+      }
+    }
+     h5{
+        margin: 10px 0 20px !important;
+     }
+
+  }
+    .publicdataCol.publicdataHoverInfo {
+      .publicDataInfo {
+        .publicHoverList {
+          height: 100%;
+          max-height: 100%;
+          top: auto;
+          bottom: 0;
+          overflow-y: scroll;
+        }
+      }
+    }
+  
+    .publicdataCol.publicdataHoverCon {
+      .publicDataInfo {
+        .publicHoverList {
+          width: 100%;
+        }
+      }
+    }
+
+  .publicDataInfo {
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #f2f2f2;
+    border-radius: 5px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, .12);
+    padding: 0;
+
+    a {
+      display: block;
+    }
+
+    .publicDataImg {
+      min-height: 57px;
+      display: flex;
+      align-items: center;
+
+      img.regNormalImg {
+        width: 16% !important;
+      }
+      img .regformImg{
+        padding-top: 30px !important;
+      }
+      img.reghoverNormalImg {
+        width: 16% !important;
+      }
+       img.sidebarImg{
+        width: 12% !important;
+      }
+      img.sidebarhoverImg{
+        width: 12% !important;
+      }
+      
+      img {
+        display: block;
+        margin: auto;
+        width: 20%;
+      }
+      .hoverImg {
+        display: none;
+      }
+      h6{
+        font-size: 14px;
+        font-weight: 600;
+        span{
+          display: block;
+        }
+      }
+    }
+        .publicDatasidebarImg {
+          img {
+            margin: 0 10px !important;
+            width: 13% !important;
+          }
+        }
+
+    .publicDataDetails {
+      h5 {
+        color: $black;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
+        margin: 12px 0 0;
+        text-align: center;
+
+        a {
+          color: inherit;
+        }
+      }
+
+      .publicHoverIcon {
+        position: absolute;
+        right: 0;
+        top: -1px;
+
+        img {
+          display: block;
+          width: 30px;
+          border: 1px solid #f2f2f2;
+          border-radius: 3px;
+        }
+      }
+      .publicHoverList {
+      display: none;
+      position: absolute;
+      left: -3px;
+      background: $white;
+      width: 480px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.22);
+      padding: 12px;
+      z-index: 99999;
+      top: 100%;
+      margin: 0;
+      border-radius: 5px;
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          font-size: 13px;
+          line-height: 20px;
+          position: relative;
+          font-weight: 400;
+          margin: 0 0 5px;
+          padding: 0 0 0 10px;
+
+          a {
+            color: inherit;
+            display: block;
+          }
+
+          a:hover {
+            color: $blueJay;
+          }
+        }
+
+        li:last-child {
+          margin: 0;
+        }
+
+        li:before {
+          background: $blueJay;
+          width: 5px;
+          height: 5px;
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 9px;
+          border-radius: 100%;
+        }
+      }
+       .panelDesc {
+          h6 {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0 0 4px;
+            color: $dark-blue;
+          }
+          p {
+            color: $dark-charcoal;
+            font-size: 13px;
+            line-height: 22px;
+            a,
+            strong {
+              color: $dark-blue;
+            }
+            a {
+              text-decoration: underline;
+            }
+          }
+          ul,
+          ol {
+            margin-bottom: 0;
+            li {
+              font-weight: 400;
+              font-size: 13px;
+              line-height: 20px;
+              color: $dark-charcoal;
+              margin: 0 0 4px;
+            }
+            li:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+    }
+    }
+  }
+  .publicDataInfoCon{
+    border-bottom-left-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+  }
+
+  .publicDataInfo:hover {
+    background-image: linear-gradient(90deg, #394c90, #27d3e0);
+        border-radius: 2px;
+
+
+    .publicDataImg {
+      img.normalImg {
+        display: none;
+         width: 20%;
+         padding-top: 30px !important;
+      }
+      img.regNormalImg {
+        width: 10% !important;
+      }
+   
+      img.hoverImg {
+        display: block;
+         width: 20%;
+      }
+      img.regNormalImg {
+        width: 10% !important;
+      }
+      .sidebarImg{
+        margin: 0 10px !important;
+      }
+      h6{
+        color: $white;
+      }
+    }
+
+    .publicDataDetails {
+      h5 {
+        color: $white;
+      }
+    }
+
+    .publicHoverList {
+      display: block;
+    }
+  }
+}
+
+.latestMainSec {
+  padding: 30px 0 10px;
+  padding: 30px 0 10px;
+  background: url("../../public/services/service_bg.jpg") no-repeat 90%;
+  background-size: auto;
+  background-position: center left 90%;
+
+  .pageTitleLeft {
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 22px;
+    }
+  }
+}
+
+//Dasboard
+
+
+//Form1
+.card{
+  .card-header{
+    background-image: linear-gradient(90deg, #394c90, #27d3e0) !important;
+    color: white !important;
+    font-weight: 600;
+  }
+  .appConTitle{
+    color: #3668a1 !important;
+    font-weight: 600;
+    span{
+      color: red;
+    }
+  }
+  .FirmSecNew {
+    .listaddressCon{
+      padding: 2px 0 10px;
+      background-color: #f2f2f2;
+      margin: 0px;
+    }
+  }
+}
+
+.pageTitleLeft{
+  h5{
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+//Form1
+
+.photo-heading {
+  font-weight: bold;
+  border: 1px solid;
+  text-align: center;
+  padding: 1rem !important;
+}
+
+.h-30 {
+  height: 30px !important;
+  background: #f2f2f2;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.error_msg {
+  color: red;
+}
+
+.bg-yellow {
+  background-color: yellow !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 23px;
+  color: $black;
+  margin: 0 0 16px;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+.checkBox {
+  display: inline-flex;
+}
+.InputBox {
+  display: block;
+  padding-left: 120px;
+  span {
+    font-size: 11px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+  }
+}
+.mainWrapper {
+  min-height: calc(100vh - 155px);
+  padding-block: 0px;
+  box-sizing: border-box;
+}
+.pageWrapper {
+  margin: 0 auto;
+  padding: 105px 0 0;
+}
+.navbarDivider {
+  .dividerContainer {
+    background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+    padding: 0;
+    height: 4px;
+  }
+}
+.navigation {
+  padding: 0;
+  background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+  .header-main-nav {
+    .nav-link {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      font-family: "Montserrat", sans-serif;
+      color: $white;
+      padding: 14px 29px;
+      cursor: pointer;
+    }
+    .nav-item.active {
+      .nav-link {
+        background: $rhino;
+      }
+    }
+  }
+}
+.formSectionTitle {
+  h3 {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    padding: 0;
+    margin: 0 0 2px;
+    color: $dark-blue;
+  }
+}
+.page-title {
+  h1 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: $dark-blue;
+    margin-bottom: 0;
+    .pageTitleImg {
+      vertical-align: -3px;
+      display: inline-block;
+      margin-right: 7px;
+    }
+  }
+}
+.btn.btn-primary,
+.btn.btn-secondary {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  border: none;
+  min-width: 90px;
+  text-align: center;
+}
+
+.btn.btn-primary {
+  background: $dark-blue !important;
+}
+.btn.btn-primary:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.goBack {
+  .btn.btn-primary,
+  .btn.btn-secondary {
+    padding: 9px 12px;
+  }
+}
+.page-header-btns {
+  .btn {
+    min-width: 80px;
+  }
+}
+.membersDetailsList {
+  .btn.addPartner {
+    min-width: 80px;
+  }
+}
+.regofAppBG{
+  padding: 20px 20px 8px !important;
+}
+.pageTitleLeft{
+  h1{
+    font-size: 22px;
+    font-weight: 700;
+    padding: 20px 0px 0px 0px;
+    margin-top: 20px;
+  }
+}
+.maindivContainer{
+  background-color: #f2f2f2;
+  border-radius: 3px;
+  padding: 15px;
+  margin: 0 10px 20px;
+}
+.societyRegSec {
+  .formsec {
+    .regofAppBg {
+      background: #fff;
+      padding: 15px 10px 15px;
+      border-radius: 5px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+      .otherDetailsList {
+        padding-bottom: 15px;
+        position: relative;
+        .removeOther {
+          position: absolute;
+          right: 15px;
+          top: 0;
+          width: auto;
+          cursor: pointer;
+          color: $dark-charcoal;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 18px;
+          padding: 0 0 0 22px;
+          background: url(../../public/assets/remove-icon.png) no-repeat left center;
+          background-size: 16px;
+        }
+        .addOther {
+          position: absolute;
+          right: 15px;
+          top: 0;
+          width: auto;
+          cursor: pointer;
+          color: $dark-charcoal;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 18px;
+          padding: 0 0 0 22px;
+          background: url(../../public/assets/add-icon.png) no-repeat left center;
+          background-size: 16px;
+        }
+      }
+      .otherDetailsList:last-child {
+        padding-bottom: 0;
+      }
+      .availability {
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 18px;
+        color: $dark-blue;
+        padding: 0;
+        text-decoration: underline;
+        background: none;
+        border: none;
+        box-shadow: none;
+        cursor: pointer;
+      }
+      h3{
+        font-size: 16px;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+    .regofAppBg:hover {
+       box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    }
+  
+    .formGroup {
+      position: relative;
+      .verify {
+        border-radius: 1px;
+        background: $dark-blue !important;
+        width: 66px;
+        height: 26px;
+        color: $white;
+        font-weight: 700;
+        font-size: 11px;
+        line-height: 17px;
+        padding: 0 !important;
+        border: none;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        min-width: inherit;
+      }
+    }
+    .formGroup.inline {
+      .form-select,
+      .form-control {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .form-select {
+        width: 23%;
+        padding: 7px 6px;
+        background-position: 96% center;
+        border-radius: 3px 0 0 3px;
+        border-right: none;
+      }
+      .form-control {
+        width: 77%;
+        border-radius: 0 3px 3px 0;
+      }
+    }
+    .firmDuration {
+      .fom-checkbox {
+        label {
+          font-size: 13px;
+          font-weight: 700;
+        }
+      }
+      .fom-checkbox2 {
+        label {
+          color: red;
+          font-size: 13px;
+          font-weight: 700;
+        }
+      }
+    }
+    .firmDurationInfo {
+      background: $white;
+      border: 1px solid $silverChalice;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.22);
+      border-radius: 3px;
+      .durationFrom, .durationTo {
+        width: 120px;
+      }
+      .form-control {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .middleLabel {
+        line-height: 34px;
+        font-weight: 700;
+        font-size: 12px;
+        color: $dark-charcoal;
+      }
+    }
+    .regFormBorder {
+      background: $platinum;
+      height: 2px;
+      margin: 10px 0 10px;
+    }
+    .form-label {
+      color: $black;
+      line-height: 20px;
+      font-size: 12px;
+      margin: 0 0 1px;
+      padding: 0;
+      font-weight: 600;
+      span {
+        color: $red;
+      }
+    }
+    .form-control {
+      color: $dark-charcoal;
+      font-size: 12px;
+      line-height: 20px;
+      font-weight: 500;
+      padding: 7px 12px;
+      background: $white;
+      border: 1px solid $silverChalice;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.22);
+      border-radius: 3px;
+      outline: none;
+    }
+    .form-select {
+      border: 1px solid $silverChalice;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.22);
+      border-radius: 3px;
+      color: $dark-charcoal;
+      font-size: 12px;
+      line-height: 20px;
+      font-weight: 500;
+      padding: 7px 12px;
+      background-color: $white;
+    }
+    .form-control.textarea {
+      height: 110px;
+    }
+    .form-control.textarea.smh {
+      height: 55px;
+    }
+    .form-check-inline {
+      margin: 0 15px 0 0;
+      position: relative;
+      padding: 0;
+      label {
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 500;
+        color: $dark-charcoal;
+      }
+      .form-check-input {
+        width: 100%;
+        height: 16px;
+        box-shadow: none;
+        position: absolute;
+        left: 0;
+        margin: 0;
+        opacity: 0;
+        z-index: 999;
+        top: 4px;
+        cursor: pointer;
+      }
+      .form-check-input + label {
+        padding: 0 0 0 22px;
+        position: relative;
+      }
+      .form-check-input + label:before {
+        width: 16px;
+        height: 16px;
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+      }
+      .form-check-input[type="radio"] + label:before {
+        background: $white;
+        border: 1px solid $dark-charcoal;
+        border-radius: 100%;
+      }
+      .form-check-input[type="radio"]:checked + label:before {
+        background: url(../../public/assets/radio-active.svg) no-repeat center center;
+        background-size: 10px;
+      }
+      .form-check-input[type="checkbox"] + label:before {
+        border: 2px solid $dark-charcoal;
+        border-radius: 2px;
+      }
+      .form-check-input[type="checkbox"]:checked + label:before {
+        background: url(../../public/assets/checkbox-active.svg) no-repeat center center;
+        border-color: transparent;
+        background-size: 19px;
+      }
+    }
+    .form-check-inline:last-child {
+      margin-right: 0;
+    }
+
+    .btnTopSpace {
+      margin-top: 26px;
+    }
+    select.form-control {
+      background: url(../../public/assets/select-icon.png) no-repeat 96% center $white;
+    }
+    select.form-control:disabled {
+      background-color: #d9d9d9;
+    }
+  }
+}
+table.tableData {
+  border-color: $lightGrey;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  tr {
+    td,
+    th {
+      border-color: $gainsboro;
+      font-size: 12px;
+      line-height: 20px;
+      color: $dark-charcoal;
+      font-family: "Montserrat", sans-serif;
+      padding: 5px 10px;
+    }
+  }
+
+  thead {
+    background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+    tr {
+      th {
+        font-weight: 600;
+        background: none;
+        color: $white;
+      }
+    }
+  }
+  tr {
+    .siNo {
+      width: 55px;
+    }
+  }
+  tbody {
+    tr {
+      td {
+        font-weight: 400;
+        background: $off-white;
+        vertical-align: middle;
+        a.viewData {
+          color: $dark-blue;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        .aadhar {
+          background: $white;
+          border: 1px solid $silverChalice;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.22);
+          border-radius: 3px;
+          padding: 6px 9px;
+        }
+      }
+    }
+    tr:nth-child(2n + 1) {
+      td {
+        --bs-table-accent-bg: inherit;
+      }
+    }
+  }
+}
+.firmApplicationSec {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      color: $dark-blue;
+      margin: 0 0 5px;
+      font-size: 13px;
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.firmSubmitSec {
+  .forgot-info {
+    a {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 18px;
+      color: $dark-blue;
+    }
+  }
+}
+.main-wrap {
+  .login-main {
+    .loginReg {
+      text-align: center;
+      .loginOtp {
+        padding: 0 0 12px;
+        font-size: 16px;
+        line-height: 20px;
+        color: $dark-charcoal;
+        a {
+          color: $dark-blue;
+          font-weight: 700;
+        }
+      }
+      .userRegBtn {
+        a {
+          border: 2px solid $dark-charcoal;
+          color: $dark-charcoal;
+          font-size: 16px;
+          font-weight: 700;
+          padding: 14px 30px;
+          line-height: 20px;
+          border-radius: 50px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .page-form {
+    .login-form-title {
+      border-bottom: 1px solid $dark-blue;
+      margin-top: 12px;
+      margin-bottom: 20px;
+
+      h3 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+        color: $dark-blue;
+        padding: 0;
+      }
+    }
+    h5 {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0;
+      padding: 0 0 5px;
+      color: #fff;
+    }
+    .form-controlInfo {
+      margin: 0 0 20px;
+    }
+    .form-label {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 16px;
+      color: $dark-charcoal;
+      display: block;
+      span {
+        color: red;
+      }
+    }
+    .form-control {
+      border: 1px solid $silverChalice;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.22);
+      border-radius: 3px;
+      background: $white;
+      height: 50px;
+      padding: 10px 16px;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 18px;
+      color: $dark-charcoal;
+    }
+    textarea.form-control {
+      height: 78px;
+      padding-top: 15px;
+    }
+    .form-check {
+      display: inline-block;
+      margin-right: 25px;
+    }
+    .forgot-info {
+      margin: 0 0 6px;
+      a {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 18px;
+        color: $dark-blue;
+      }
+    }
+    .form-submit {
+      margin: 0 0 10px;
+      .btn {
+        background: $dark-blue;
+        border-radius: 3px;
+        width: 100%;
+        height: 50px;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 18px;
+        color: $white;
+        border: none;
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+  .loginPage {
+    .container {
+      max-width: 800px;
+    }
+    input.username {
+      background: url(../../public/assets/username-icon.jpg) no-repeat 98% $white;
+    }
+    input.password {
+      background: url(../../public/assets/password-icon.svg) no-repeat 98% $white;
+    }
+  }
+  .registerPage {
+    .container {
+      border: 1px solid $gray-hover;
+      padding: 8px 16px;
+      border-radius: 8px;
+      box-shadow: 0 0 4px $gray-hover;
+      max-width: 960px;
+    }
+  }
+}
+.nextBtn {
+  margin-left: 10px;
+}
+.formTypeHeader.pageWrapper {
+  padding-top: 0;
+  header,
+  footer {
+    display: none;
+  }
+}
+.formTypeSec {
+  .formTypeborder {
+    border: 1px solid $lightSilver;
+    padding: 10px;
+    max-width: 700px;
+    margin: auto;
+    .formPageTitle {
+      text-align: center;
+      h1 {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+        color: $dark-blue;
+        margin: 0 0 6px;
+      }
+      h5 {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: $black;
+        margin: 0 0 4px;
+      }
+      h4 {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+        color: $dark-blue;
+        margin: 0 0 12px;
+      }
+    }
+    .forwardReg {
+      input {
+        display: inline-block;
+        padding: 3px 10px;
+        margin: 0 0 0 4px;
+        font-size: 14px;
+        max-width: 46%;
+      }
+    }
+    .forwardReg.bythe {
+      input {
+        max-width: 93%;
+      }
+    }
+    .forwardReg.two {
+      padding-left: 41px;
+      input {
+        max-width: 49%;
+      }
+    }
+    .formTypeSecTitle {
+      h3 {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+        color: $dark-blue;
+      }
+    }
+    .formTypSecborder {
+      background: $brightGray;
+      height: 1px;
+      margin-bottom: 14px;
+    }
+    .formHeresec {
+      .inline {
+        .form-control,
+        .form-select,
+        span {
+          display: inline-block;
+        }
+        span {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 22px;
+          color: $black;
+        }
+      }
+      .one {
+        .form-control {
+          width: 93%;
+          margin-left: 8px;
+        }
+      }
+      .two {
+        .form-select {
+          width: 23%;
+          padding: 8px 6px;
+          background-position: 96% center;
+          border-radius: 3px 0 0 3px;
+          border-right: none;
+        }
+        .form-control {
+          width: 77%;
+          border-radius: 0 3px 3px 0;
+        }
+      }
+    }
+  }
+}
+.uploadFirmList {
+  h3 {
+    background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 20px;
+    color: $white;
+    padding: 5px 12px;
+    margin: 0;
+  }
+  .firmFileInfo {
+    padding: 4px 0;
+    margin-right: 8px;
+  }
+  .firmFile {
+    input.form-control {
+      max-width: 260px;
+    }
+  }
+ 
+  .regofAppBg {
+    .applicantMessage {
+      p {
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+  }
+}
+.firmSubmitSec {
+  .btn {
+    margin: 0 8px;
+  }
+}
+.mobileFirmTitle {
+  display: none;
+}
+.NewFirmSecTitle {
+  padding: 5px 12px;
+  background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+  h3 {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 20px;
+    color: $white;
+    margin: 0;
+  }
+}
+.FirmSecNew {
+  .regofAppBg {
+    padding-bottom: 15px;
+    position: relative;
+    .addOther {
+      position: absolute;
+      right: 15px;
+      top: 0;
+      width: auto;
+      cursor: pointer;
+      color: $dark-charcoal;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 18px;
+      padding: 0 0 0 22px;
+      background: url(../../public/assets/add-icon.png) no-repeat left center;
+      background-size: 16px;
+    }
+    .removeOther {
+      position: absolute;
+      right: 15px;
+      top: 0;
+      width: auto;
+      cursor: pointer;
+      color: $dark-charcoal;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 18px;
+      padding: 0 0 0 22px;
+      background: url(../../public/assets/remove-icon.png) no-repeat left center;
+      background-size: 16px;
+    }
+  }
+}
+.otherPlaceSec {
+  .otherPlaceList {
+    .otherDetailsList {
+      padding-bottom: 15px;
+      position: relative;
+      .removeOther {
+        position: absolute;
+        right: 15px;
+        top: 0;
+        width: auto;
+        cursor: pointer;
+        color: $dark-charcoal;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 18px;
+        padding: 0 0 0 22px;
+        background: url(../../public/assets/remove-icon.png) no-repeat left center;
+        background-size: 16px;
+      }
+    }
+    .otherDetailsList:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+.error-message {
+  color: $red;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 7px 0 0;
+  font-weight: 500;
+}
+.currentPartnerSec {
+  .currentPartnersTable {
+    table.tableData {
+      thead {
+        background: $chineseBlue;
+      }
+    }
+  }
+}
+.logiRegMainSec {
+  // min-height: calc(100vh - 225px);
+  // display: flex;
+  // align-items: center;
+  .societyRegSec {
+    width: 100%;
+    padding: 33px 10px;
+    .regContainerSec {
+      width: 600px;
+      .enterOTPForm {
+        max-width: 480px;
+        margin: auto;
+      }
+      .firmRegList {
+        .form-check {
+          margin: 0 50px 0 0;
+          .form-check-label {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 26px;
+            padding: 0 0 0 32px;
+          }
+          .form-check-input[type="radio"] {
+            height: 26px;
+            top: 0;
+          }
+          .form-check-input[type="radio"] + label::before {
+            width: 26px;
+            height: 26px;
+          }
+          .form-check-input[type="radio"]:checked + label::before {
+            background-size: 16px;
+          }
+        }
+        .form-check:last-child {
+          margin-right: 0;
+        }
+      }
+       .regSecCon {
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        .homepageTitle{
+          h3{
+          font-size: 24px;
+          color: $titlecolor;
+          text-align: center;
+          font-weight: 700;
+          }
+          
+        }
+        .mainColCon{
+          border-right: 2px solid #cbcbcb;
+        }
+        .dashboardInfologin{
+          ul{
+            li{
+              font-weight: 500;
+              font-size: 14px;
+              color: black;
+            }
+          }
+          .panelDesc{
+            ol{
+              li{
+                font-weight: 500;
+              font-size: 14px;
+              color: black;
+              }
+            }
+            p{
+              font-weight: 500;
+              font-size: 14px;
+              color: black;
+            }
+          }
+        }
+      }
+      .regloginSecCon{
+        width: 500px !important;
+        margin: 0 auto !important;
+        vertical-align: middle;
+        
+      }
+    }
+
+    .regContainerloginSec{
+      display: flex;
+    justify-content: center;   
+    align-items: center;     
+    min-height: calc(84vh - 120px); 
+    padding-top: 20px; 
+    padding-bottom: 20px;
+    .regloginSecCon{
+      width: 420px;                
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    }
+    .form-control {
+      font-size: 14px !important;
+    }
+    }
+    
+   
+    .loginFieldsSec {
+      max-width: 400px;
+      margin: auto;
+    }
+    .loginFieldsSec.departmentSec {
+      max-width: 500px;
+    }
+    .firmSubmitSec {
+      .btn {
+        max-width: 100px;
+        width: 100%;
+      }
+    }
+    .firmRegFieldsList.regofAppBg {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .formSectionTitle {
+      h3 {
+        font-size: 18px;
+        line-height: 24px;
+        margin-bottom: 3px;
+        button {
+          .enterBackImg {
+            vertical-align: -3px;
+          }
+        }
+        .enterBackImg {
+          width: 9px;
+        }
+        a,
+        span {
+          vertical-align: 0px;
+          margin-right: 6px;
+        }
+        a.backIcon {
+          vertical-align: 1px;
+          cursor: pointer;
+          img {
+            width: 11px;
+          }
+        }
+        span {
+          cursor: pointer;
+          img {
+            display: inline-block;
+            vertical-align: -2px;
+            width: 11px;
+          }
+        }
+      }
+    }
+    .regNote {
+      p {
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 16px;
+      }
+    }
+    .alreadyAccount {
+      p {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 18px;
+        text-align: right;
+        a {
+          color: $dark-blue;
+        }
+      }
+    }
+    .regFieldsMain {
+      .firmSubmitSec {
+        .btn {
+          margin-left: 0;
+        }
+      }
+    }
+    .verifyMail {
+      p {
+        font-size: 18px;
+        line-height: 22px;
+        color: $black;
+      }
+    }
+    .regMainFitSec {
+      .regContainerSec {
+        width: 100%;
+        .firmSubmitSec {
+          padding: 32px 0 20px;
+          .homeLoginBtn{
+            text-align: center;
+            justify-content: center;
+            margin: 0 auto;
+          .btn {
+            max-width: 100%;
+            width: 170px;
+            margin-right: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-right: 10px;
+            font-size: 14px;
+          }
+          }
+        }
+      }
+    }
+  }
+}
+.logiRegMainSec.regAccordionSec {
+  display: block;
+}
+.formRegDisable {
+  .regFieldsMain {
+    display: none;
+  }
+}
+.regTypeFieldSec {
+  .regTypeBtns {
+    padding: 0 0 35px;
+    max-width: 480px;
+    margin: auto;
+  }
+}
+.formRegEnable.logiRegMainSec {
+  .regTypeFieldSec {
+    display: none;
+  }
+  .regFieldsMain {
+    display: block;
+  }
+}
+.societyMembersList {
+  .societyMemberDetails {
+    .regFormBorder {
+      display: none;
+    }
+    .memberDetailsList {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+.defaultDisable {
+  display: none;
+}
+
+.dashboardRegSec {
+  .dashboardInfo {
+    height: 100%;
+    background: $off-white;
+    border: 1px solid $lightSilver;
+    text-align: center;
+    padding: 22px 40px;
+    h6 {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 22px;
+      color: $black;
+      margin: 0;
+      width: 100%;
+      .dashboardNotify {
+        margin-left: 6px;
+        cursor: pointer;
+      }
+    }
+  }
+  .dashboardInfologin {
+
+    // h6 {
+    //   font-weight: 700;
+    //   font-size: 16px;
+    //   line-height: 22px;
+    //   color: $dark-blue;
+    //   margin: 0;
+    //   width: 100%;
+    //   .dashboardNotify {
+    //     margin-left: 6px;
+    //     cursor: pointer;
+    //   }
+    // }
+    h6 {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 22px;
+      margin: 0 0 4px;
+      color: $dark-blue;
+    }
+
+    p {
+      color: $dark-charcoal;
+      font-size: 13px;
+      line-height: 22px;
+
+      a,
+      strong {
+        color: $dark-blue;
+      }
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    ul,
+    ol {
+      margin-bottom: 0;
+
+      li {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 20px;
+        color: $dark-charcoal;
+        margin: 0 0 4px;
+      }
+
+      li:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+
+  }
+}
+
+.dashboardTopList {
+  .dashboardChangesInfo {
+    height: 100%;
+    background: #37609c;
+    padding: 8px;
+    .dashboardFirmImg {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 9px;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      align-items: center;
+      text-align: center;
+      margin-right: 10px;
+      padding: 0 10px;
+      img {
+        display: block;
+        margin: auto;
+      }
+    }
+    .dashboardFirmRight {
+      h6 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $white;
+        margin: 0 0 2px;
+      }
+      p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 16px;
+        color: $white;
+        strong {
+          line-height: 21px;
+        }
+      }
+      p.mrg {
+        margin: 0 20px 0 0;
+      }
+    }
+  }
+  .dashboardAddress {
+    .dashboardChangesInfo {
+      background: #3284b1;
+    }
+  }
+  .dashboardReconstitution {
+    .dashboardChangesInfo {
+      background: #2da6c5;
+    }
+  }
+  .dashboardCertified {
+    .dashboardChangesInfo {
+      background: #29c8d9;
+    }
+  }
+}
+
+.dahboardProcedureSec {
+  .accordion {
+    .accordion-item {
+      border: none;
+      background: none;
+      margin: 0 0 10px;
+      .accordion-header {
+        background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+        padding: 4px 12px;
+        .accordion-button {
+          background: url(../../public/assets/accordion-minus.png) no-repeat right center;
+          background-size: 14px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 24px;
+          color: $white;
+          padding: 0;
+          border: none;
+          box-shadow: none;
+        }
+        .accordion-button.collapsed {
+          background: url(../../public/assets/accordion-plus.png) no-repeat right center;
+          background-size: 14px;
+        }
+        .accordion-button::after {
+          display: none;
+        }
+      }
+      .accordion-body {
+        background: $off-white;
+        border: 1px solid $gainsboro;
+        padding: 6px 12px 8px;
+        .panelDesc {
+          h6 {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0 0 4px;
+            color: $dark-blue;
+          }
+          p {
+            color: $dark-charcoal;
+            font-size: 13px;
+            line-height: 22px;
+            a,
+            strong {
+              color: $dark-blue;
+            }
+            a {
+              text-decoration: underline;
+            }
+          }
+          ul,
+          ol {
+            margin-bottom: 0;
+            li {
+              font-weight: 400;
+              font-size: 13px;
+              line-height: 20px;
+              color: $dark-charcoal;
+              margin: 0 0 4px;
+            }
+            li:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+    .accordion-item:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal-backdrop {
+  display: none;
+}
+.modal {
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.87);
+  .modal-dialog {
+    .modal-content {
+      padding: 2px;
+      border-radius: 0;
+      border: none;
+      .modal-header {
+        background: linear-gradient(90deg, #394c91 0.86%, #27d3e0 100%);
+        padding: 6px 18px;
+        border: none;
+        border-radius: 0;
+        .modal-title {
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 27px;
+          color: $white;
+        }
+        .btn-close {
+          background: url(../../public/assets/popup-close.svg) no-repeat center center;
+          width: 24px;
+          height: 24px;
+          font-size: 0;
+          padding: 0;
+          text-indent: -999999px;
+          opacity: 1;
+          border-radius: 0;
+        }
+      }
+      .modal-body {
+        padding: 18px;
+        p {
+          margin: 0 0 10px;
+        }
+        p:last-child {
+          margin-bottom: 0;
+        }
+        ol {
+          margin-bottom: 0;
+          li {
+            font-size: 14px;
+            line-height: 23px;
+            margin: 0 0 5px;
+          }
+          li:last-child {
+            margin-bottom: 0;
+          }
+        }
+        .popupbtn {
+          text-align: center;
+          padding-top: 15px;
+          .btn {
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+}
+.headerMainSec {
+  .cm-img {
+    img {
+      width: 53px;
+    }
+  }
+}
+
+.pageTitleRight {
+  .btn.logoutbtn {
+    padding: 0 12px;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    font-weight: 500;
+    .LogoutIcon {
+      margin-right: 4px;
+    }
+  }
+  .btn.btn-secondary.logoutbtn {
+    margin-left: 10px;
+  }
+}
+.appMainTitle {
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    margin: 0;
+  }
+}
+
+.viewCertificatePage {
+  .pageWrapper {
+    padding-top: 0;
+    header,
+    footer,
+    .pageTopbtnsSec {
+      display: none;
+    }
+    .mainWrapper {
+      padding: 33px 0;
+    }
+    .viewCerticateSec {
+      .container {
+        max-width: 920px;
+      }
+    }
+    .certificateHeader {
+      text-align: center;
+      max-width: 555px;
+      margin: auto;
+      .certificateHeaderLogo {
+        img {
+          width: 150px;
+          display: block;
+          margin: auto;
+        }
+      }
+      h1 {
+        font-size: 25px;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        line-height: 25px;
+        color: $black;
+        margin: 0;
+        span {
+          display: block;
+        }
+      }
+      p {
+        font-family: "Montserrat", sans-serif;
+        color: $black;
+        font-size: 16px;
+        line-height: 20px;
+        margin: 3px 0 3px;
+      }
+      h5 {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        line-height: 25px;
+        color: $black;
+      }
+    }
+    .certificateReg {
+      padding: 15px 0 8px;
+      .certificateTitle {
+        h2 {
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 25px;
+          font-family: "Montserrat", sans-serif;
+          color: $black;
+          margin: 0;
+        }
+        h6 {
+          font-size: 12px;
+          font-weight: bold;
+          font-family: "Montserrat", sans-serif;
+          line-height: 25px;
+          color: $black;
+          margin: 0;
+        }
+      }
+      .certificateInfo {
+        text-align: right;
+        h6,
+        h5 {
+          color: $black;
+          font-size: 10px;
+          line-height: 17px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: bold;
+          margin: 0;
+        }
+        h5 {
+          letter-spacing: 4px;
+        }
+        img {
+          width: 150px;
+          height: 35px;
+          margin-right: -8px;
+        }
+      }
+    }
+    .certificateHereInfo {
+      p {
+        word-break: break-all;
+        line-height: 25px;
+        font-family: "Montserrat", sans-serif;
+        color: $black;
+        font-size: 16px;
+      }
+    }
+    .certifyLogoSec {
+      padding: 10px 0 25px;
+      h6 {
+        font-size: 11px;
+        line-height: 18px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        color: $black;
+        margin: 0;
+      }
+      .certifyLogoInfo {
+        width: 150px;
+        .certifyLogoImgSec {
+          position: relative;
+          img {
+            display: block;
+          }
+          h6 {
+            max-width: 96px;
+            margin: auto;
+            line-height: 12px;
+            right: 0;
+            left: 0;
+            bottom: 85px;
+            position: absolute;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            font-size: 10px;
+          }
+        }
+      }
+      .certifySignInfo {
+        text-align: right;
+        img {
+          width: 150px;
+          height: 50px;
+        }
+      }
+    }
+    .certifyTopTitle {
+      padding: 0 0 3px;
+      h2 {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        line-height: 25px;
+        color: $black;
+        margin: 0;
+      }
+    }
+    .certifyMaintainSec {
+      h3 {
+        font-size: 15px;
+        line-height: 18px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        margin: 0 0 15px;
+      }
+    }
+    .certifiyTable {
+      border-color: $black;
+      vertical-align: middle;
+      tr {
+        th,
+        td {
+          color: $black;
+          font-size: 12px;
+          line-height: 18px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: bold;
+          padding: 4px 10px;
+          vertical-align: middle;
+        }
+      }
+      thead {
+        tr {
+          th {
+            text-align: center;
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            background: none;
+            --bs-table-accent-bg: inherit;
+          }
+        }
+      }
+    }
+    .certificateBtnSec {
+      .btn {
+        font-family: "Montserrat", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        height: 33px;
+        line-height: 33px;
+        padding: 0 20px;
+        border-radius: 50px;
+      }
+    }
+  }
+}
+
+#viewSocietyCerticate {
+  .viewCertificatePage {
+    .viewCerticateSec {
+      .container {
+        max-width: 1080px;
+      }
+    }
+  }
+}
+
+.pagesubmitSecTitle {
+  h2 {
+    font-size: 16px;
+    line-height: 22px;
+    color: $dark-charcoal;
+  }
+}
+
+.dataPrevSec {
+  .formsec {
+    .firmApplicationSec {
+      .form-label {
+        font-size: 12px;
+        margin-bottom: 1px;
+        font-weight: 600;
+      }
+      .valuePrev {
+        font-size: 13px;
+        line-height: 19px;
+        color: $dark-charcoal;
+      }
+    }
+  }
+}
+
+.tableSec {
+  .formSectionTitle {
+    h3 {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.mb-4 {
+  margin-bottom: 10px !important;
+}
+.mb-3 {
+  margin-bottom: 8px !important;
+}
+.mt-4 {
+  margin-top: 8px !important;
+}
+
+.logiRegMainSec {
+  .societyRegSec {
+    .departmentSec {
+      .formsec {
+        .firmRegFieldsList {
+          input[name="userNameOrEmail"] {
+            background: url(../../public/assets/username-icon.jpg) no-repeat 97% center $white;
+            background-size: 11px;
+          }
+          .departmentPassword {
+            position: relative;
+            .passwordToggle {
+              width: 17px;
+              height: 15px;
+              position: absolute;
+              right: 14px;
+              top: 35px;
+              cursor: pointer;
+              span {
+                display: none;
+              }
+            }
+            .notVisible {
+              background: url("../../public/assets/password-notvisible-icon.jpg") no-repeat center
+                center;
+              background-size: 17px;
+            }
+            .visible {
+              background: url("../../public/assets/password-visible-icon.jpg") no-repeat center
+                center;
+              background-size: 17px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.previewFormPage {
+  .pageWrapper {
+    .mainWrapper {
+      #viewSocietyCerticate {
+        .viewCerticateSec {
+          padding-top: 20px;
+          .container {
+            max-width: 920px;
+          }
+          .certificateHereInfo {
+            padding: 20px 0;
+          }
+          .certifyMaintainSec.subhead {
+            h3 {
+              margin-bottom: 6px;
+            }
+          }
+          .addressPlace {
+            padding-bottom: 15px;
+            p {
+              text-align: left;
+            }
+          }
+          .previewFormPagePdf {
+            padding: 0 0 30px;
+            .certificateHeader {
+              h6 {
+                font-family: "Montserrat", sans-serif;
+                color: $black;
+              }
+            }
+            p {
+              color: $black;
+              font-family: "Montserrat", sans-serif;
+              font-size: 16px;
+              line-height: 22px;
+              margin: 0 0 6px;
+              strong {
+                font-weight: 600;
+                border-bottom: 1px solid #a1a1a1;
+              }
+              strong.religion {
+                min-width: 150px;
+                display: inline-block;
+              }
+            }
+            .declarationDesc {
+              padding: 15px 0 80px;
+            }
+            .declarationDescPartners {
+              .declarePartners {
+                padding: 0 0 30px;
+                p {
+                  margin: 0 0 10px;
+                }
+              }
+            }
+            .declarationFirm {
+              padding: 18px 0 0;
+            }
+          }
+          .partnershipRules {
+            padding: 15px 0;
+          }
+        }
+      }
+      .certificateBtnSec {
+        padding-top: 20px;
+        .container {
+          max-width: 920px;
+        }
+      }
+    }
+  }
+}
+
+.paymentSuccessPage {
+  .pageWrapper {
+    // padding: 6px 0;
+    background: #d4d4d7;
+    // height: 100vh;
+    // header,
+    // footer,
+    // .pageTopbtnsSec {
+    //   display: none;
+    // }
+    .paymentpageSec {
+      // min-height: inherit;
+      // display: block;
+      // .paymentPageHeader {
+      // padding: 30px 0;
+      // header {
+      //   display: block;
+      //   position: relative;
+      //   .headerInfoSec,
+      //   .col-lg-3,
+      //   .navbarDivider {
+      //     display: none;
+      //   }
+      //   .col-lg-6 {
+      //     width: 100%;
+      //   }
+      // }
+      // }
+      .regFieldsMain {
+        background: $white;
+        padding-block: 40px;
+        .formSectionTitle {
+          h2 {
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 700;
+            margin: 0 0 20px;
+            color: $dark-blue;
+          }
+          h3 {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 600;
+            margin: 0;
+            color: green;
+          }
+          h6 {
+            font-weight: 500;
+            color: $dark-charcoal;
+            font-size: 26px;
+            line-height: 30px;
+            margin: 10px 0 0;
+          }
+          h4 {
+            font-size: 18px;
+            line-height: 26px;
+            font-weight: 500;
+            color: $dark-charcoal;
+            margin: 24px 0 14px;
+          }
+        }
+        .paymentFailed {
+          .formSectionTitle {
+            h3 {
+              color: red;
+            }
+          }
+        }
+        .paymentTable {
+          border: 2px solid $black;
+          max-width: 700px;
+          margin: auto;
+          tr {
+            td {
+              border-bottom-width: 2px;
+              border-right: none;
+              border-left: none;
+              text-align: left;
+            }
+            td:first-child {
+              text-align: right;
+            }
+          }
+        }
+        .paymentpagebtns {
+          padding-top: 20px;
+        }
+      }
+
+      .container {
+        width: 980px;
+      }
+    }
+  }
+}
+
+nav#myaccountNav {
+  padding: 0;
+  a#myAccount {
+    font-size: 13px;
+    font-weight: 500;
+    color: $white;
+    background: $titlecolor;
+    border-radius: 4px;
+    padding: 6px 14px;
+    margin: 0 8px 0 0;
+  }
+  a#myAccount:after {
+    vertical-align: 1px;
+    border-top: 5px solid;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+  }
+  .dropdown-menu {
+    min-width: 150px;
+    padding: 0;
+    .dropdown-item {
+      font-size: 13px;
+      line-height: 20px;
+      padding: 6px 13px;
+      border-bottom: 1px solid #efefef;
+    }
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+  }
+}
+.logiRegMainSec.profilePage {
+  .societyRegSec {
+    .regContainerSec {
+      width: 100%;
+      max-width: 400px;
+      .loginFieldsSec {
+        max-width: 100%;
+        .firmSubmitSec {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+@media all {
+  .page-break {
+    display: none;
+    height: 350px;
+  }
+}
+@media print {
+  html,
+  body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+  @page {
+    size: portrait;
+  }
+}
+
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: auto;
+  }
+}
+.form-control.datePicker {
+  background: url(../../public/assets/calender.svg) no-repeat 96% center $white !important;
+  background-size: 13px !important;
+}
+
+.applicationPendingSec {
+  .certificateHeader {
+    h3 {
+      font-size: 18px;
+      color: $dark-blue;
+      font-weight: 600;
+    }
+  }
+}
+
+select {
+  option {
+    font-family: "Montserrat", sans-serif;
+    color: $black;
+    font-size: 12px;
+  }
+}
+.firmDurationInfo.disableVals {
+  input {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  div:nth-child(2) {
+    input {
+      text-align: center;
+    }
+  }
+}
+.note.requiredData {
+  p {
+    font-weight: 600;
+    font-size: 12px;
+  }
+}
+// .formsec {
+//   .regNewStarSec {
+//     .firmRegFieldsList {
+//       p {
+//         span {
+//           display: none;
+//         }
+//       }
+//     }
+//   }
+// }
+
+.home-main-sec {
+  .modal-content {
+    width: 500px;
+    margin: auto;
+    background: #fff;
+    border-radius: 5px;
+  }
+}
+
+.previewFormPage {
+  .pageWrapper {
+    padding: 0;
+    header,
+    footer {
+      display: none;
+    }
+    .mainWrapper {
+      .pageTopbtnsSec {
+        display: none;
+      }
+      .previewFormSec {
+        .container {
+          max-width: 980px;
+        }
+      }
+    }
+  }
+}
+
+.previewFirmDocuments {
+  h3 {
+    background: $dark-charcoal;
+    font-family: "Montserrat", sans-serif;
+    color: $white;
+    text-align: center;
+    font-size: 20px;
+    line-height: 22px;
+    padding: 9px 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mainWrapper {
+    width: fit-content;
+  }
+}
+
+@media (min-width: 992px) {
+  .uploadFirmList {
+    .col-lg-2 {
+      width: 20%;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .navigation {
+    .header-main-nav {
+      .nav-link {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  }
+  table.tableData {
+    tr {
+      td,
+      th {
+        font-size: 12px;
+        line-height: 18px;
+        padding: 4px 12px;
+      }
+    }
+  }
+}
+// @media (min-width: 1200px) {
+//   .container,
+//   .container-lg,
+//   .container-md,
+//   .container-sm,
+//   .container-xl {
+//     max-width: 1460px;
+//   }
+// }
+
+.tabcontainer {
+  display: flex;
+  margin-left: 2.5%;
+  margin-top: 1%;
+  // margin-bottom: 2%;
+  border-bottom: 1px solid #3668a1;
+  // gap: 2%;
+  width: 95%;
+
+  .button {
+    @extend %buttonStyle;
+  }
+
+  .activeButton {
+    @extend %buttonStyle;
+    border: 1px solid #3668a1;
+    border-color: #3668a1;
+    border-bottom: none;
+    background-color: #fff;
+    color: #3668a1;
+  }
+
+}
+
+//For info box
+.mutablemodalCon {
+  font-family: 'Montserrat';
+  font-weight: 500;
+
+  .mutablemodalHeader {
+    height: 40px;
+    background-color: $titlecolor;
+    color: white;
+
+    .modal-title {
+      font-size: 20px;
+    }
+
+    .closeIcon {
+      color: white !important;
+      font-weight: 700;
+      padding-top: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .mutablemodalInfo {
+    .noteText{
+      text-align: center;
+      font-weight: 500;
+      line-height: 35px;
+      font-family: 'Montserrat';
+      font-size: 16px;
+      span{
+        color: red;
+      }
+    }    
+  }
+}
