@@ -2,23 +2,22 @@ pipeline {
     agent any
 
     tools {
-        nodejs "Node16" // Make sure this NodeJS installation is configured in Jenkins global tools
+        nodejs "Node16" // Make sure Node16 is configured in Jenkins global tools
     }
 
     environment {
-        DEPLOY_PATH = "/root/siva/FIRMS"
-        SERVER = "10.10.120.190"
-        REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI.git"
-        BRANCH = "main"
+        DEPLOY_PATH = "/root/siva/FIRMS_UI"
+        SERVER_IP = "10.10.120.190"
+        SERVER_PORT = "8080"
     }
 
     stages {
 
         stage('Checkout Code') {
             steps {
-                git branch: "${BRANCH}",
-                    url: "${REPO_URL}",
-                    credentialsId: 'KSivasankarR' // Your GitHub credentials ID
+                git branch: 'main',
+                    url: 'https://github.com/KSivasankarR/FIRMS_UI.git',
+                    credentialsId: 'KSivasankarR' // Your GitHub credentials in Jenkins
             }
         }
 
@@ -31,24 +30,25 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                // Ignore peer dependency conflicts for CI
+                sh 'npm install --legacy-peer-deps'
             }
         }
 
         stage('Build Project') {
             steps {
-                // Disable CI warnings for ESLint if needed
+                // Build without failing on ESLint warnings
                 sh 'CI=false npm run build'
             }
         }
 
         stage('Deploy') {
             steps {
-                // Copy build files to the server
+                echo "Deploying to ${SERVER_IP}:${SERVER_PORT}"
+                // Copy built files to remote server using scp
                 sh """
-                ssh ${SERVER} 'sudo mkdir -p ${DEPLOY_PATH}'
-                scp -r .next/* ${SERVER}:${DEPLOY_PATH}/
-                scp -r public/* ${SERVER}:${DEPLOY_PATH}/
+                    ssh root@${SERVER_IP} "mkdir -p ${DEPLOY_PATH}"
+                    scp -r .next/* root@${SERVER_IP}:${DEPLOY_PATH}/
                 """
             }
         }
