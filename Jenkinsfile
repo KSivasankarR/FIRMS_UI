@@ -2,14 +2,11 @@ pipeline {
     agent any
 
     tools {
-        nodejs "Node16" // Make sure Node16 is installed in Jenkins
+        nodejs "Node16" // Node16 configured in Jenkins global tools
     }
 
     environment {
         DEPLOY_PATH = "/root/siva/FIRMS_UI"
-        SERVER_IP = "10.10.120.190"
-        APP_NAME = "FIRMS_UI" // PM2 process name
-        INSTANCES = "max"     // 'max' means PM2 will use all CPU cores
     }
 
     stages {
@@ -18,7 +15,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/KSivasankarR/FIRMS_UI.git',
-                    credentialsId: 'KSivasankarR'
+                    credentialsId: 'KSivasankarR' // Your GitHub credentials in Jenkins
             }
         }
 
@@ -31,35 +28,28 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                // Ignore peer dependency conflicts for CI
                 sh 'npm install --legacy-peer-deps'
             }
         }
 
         stage('Build Project') {
             steps {
+                // Build without failing on ESLint warnings
                 sh 'CI=false npm run build'
             }
         }
 
         stage('Deploy & Run with PM2 Cluster') {
             steps {
-                echo "Deploying to ${SERVER_IP} in PM2 cluster mode"
-
-                // Copy files to remote server
+                echo "Deploying locally to ${DEPLOY_PATH} with PM2 cluster mode"
                 sh """
-                    ssh -o StrictHostKeyChecking=no root@${SERVER_IP} "mkdir -p ${DEPLOY_PATH}"
-                    scp -o StrictHostKeyChecking=no -r .next package.json package-lock.json node_modules root@${SERVER_IP}:${DEPLOY_PATH}/
-                """
-
-                // Start app in PM2 cluster mode
-                sh """
-                    ssh -o StrictHostKeyChecking=no root@${SERVER_IP} '
-                        cd ${DEPLOY_PATH} &&
-                        pm2 stop ${APP_NAME} || true &&
-                        pm2 delete ${APP_NAME} || true &&
-                        pm2 start npm --name "${APP_NAME}" -i ${INSTANCES} -- start &&
-                        pm2 save
-                    '
+                    mkdir -p ${DEPLOY_PATH}
+                    cp -r .next/* ${DEPLOY_PATH}/
+                    cd ${DEPLOY_PATH}
+                    pm2 delete FIRMS_UI || true
+                    pm2 start npm --name "FIRMS_UI" -- run start
+                    pm2 save
                 """
             }
         }
@@ -67,7 +57,7 @@ pipeline {
 
     post {
         success {
-            echo '✅ Build & Deployment Successful (PM2 Cluster Mode)'
+            echo '✅ Build & Deployment Successful'
         }
         failure {
             echo '❌ Build Failed'
