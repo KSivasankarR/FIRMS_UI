@@ -19,11 +19,10 @@ pipeline {
 
         stage('Setup Node') {
             steps {
-                echo "Using Node version ${NODE_VERSION}"
-                // Install nvm and use node 16 if needed
+                echo "Setting up Node version ${NODE_VERSION}"
                 sh '''
                 export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                 nvm install ${NODE_VERSION}
                 nvm use ${NODE_VERSION}
                 node -v
@@ -52,13 +51,24 @@ pipeline {
 
                 sh """
                 mkdir -p ${DEPLOY_PATH}
-                # Stop existing app if running
-                pm2 delete ${APP_NAME} || true
-                # Copy build to deploy path
-                cp -r * ${DEPLOY_PATH}/
+
+                # Use pm2 for zero-downtime reload
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                nvm use ${NODE_VERSION}
+
                 cd ${DEPLOY_PATH}
-                # Start app with pm2
-                pm2 start npm --name "${APP_NAME}" -- start
+
+                # Copy new build
+                rsync -av --exclude='.git' ./ ${DEPLOY_PATH}/
+
+                # Start or reload app with pm2
+                if pm2 list | grep -q ${APP_NAME}; then
+                    pm2 reload ${APP_NAME} --update-env
+                else
+                    pm2 start npm --name "${APP_NAME}" -- start
+                fi
+
                 pm2 save
                 """
             }
@@ -67,7 +77,15 @@ pipeline {
         stage('Verify') {
             steps {
                 echo "Verifying deployment..."
-                sh "curl -I http://localhost:${PORT} || echo 'App not responding yet.'"
+                sh """
+                sleep 5
+                if curl -s --head http://localhost:${PORT} | grep "200 OK"; then
+                    echo "App is running on port ${PORT}"
+                else
+                    echo "App not responding yet."
+                    exit 1
+                fi
+                """
             }
         }
     }
