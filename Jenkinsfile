@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'  // Ensure Node16 is configured in Jenkins
+        nodejs 'Node16'  // Ensure Node16 tool is configured in Jenkins
     }
 
     environment {
@@ -13,7 +13,7 @@ pipeline {
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
         BACKUP_KEEP = 5
         NODE_ENV = "production"          // Required for Next.js build
-        # NEXT_PUBLIC_* env variables can be added here if needed
+        // You can add NEXT_PUBLIC_* environment variables here if needed
     }
 
     stages {
