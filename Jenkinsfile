@@ -20,8 +20,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                echo "Installing Node.js dependencies..."
-                npm install
+                echo "Installing Node.js dependencies (ignoring peer conflicts)..."
+                npm install --legacy-peer-deps
                 '''
             }
         }
