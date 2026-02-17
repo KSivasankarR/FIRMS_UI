@@ -1,23 +1,19 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'Node16' // Make sure this matches your Jenkins NodeJS tool name
-    }
-
     environment {
-        PORT = '3000'
-        HOST = '0.0.0.0'
-        APP_NAME = 'FIRMS_UI'
-        APP_DIR = '/var/lib/jenkins/FIRMS_UI'
-        PM2_HOME = '/var/lib/jenkins/.pm2'
+        GIT_REPO = "https://github.com/KSivasankarR/FIRMS_UI.git"
+        BRANCH   = "main"
+        DEPLOY_PATH = "/var/lib/jenkins/FIRMS_UI"
+        APP_NAME = "FIRMS_UI"
+        PORT = "3008"
     }
 
     stages {
 
-        stage('Checkout SCM') {
+        stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: "${BRANCH}", url: "${GIT_REPO}"
             }
         }
 
@@ -27,69 +23,56 @@ pipeline {
             }
         }
 
-
-        stage('Build App') {
+        stage('Build React App') {
             steps {
                 sh 'npm run build'
             }
         }
 
-        stage('Deploy with PM2') {
+        stage('Deploy Build') {
             steps {
-                sh '''
-                  export PM2_HOME=${PM2_HOME}
+                sh """
+                echo "Deploying FIRMS_UI to ${DEPLOY_PATH}..."
+                mkdir -p ${DEPLOY_PATH}
+                rm -rf ${DEPLOY_PATH}/*
+                cp -r build/* ${DEPLOY_PATH}/
+                """
+            }
+        }
 
-                  if pm2 describe ${APP_NAME} > /dev/null; then
-                    echo "App exists. Restarting..."
-                    pm2 restart ${APP_NAME}
-                  else
-                    echo "App not found. Starting fresh instance..."
-                    pm2 start node_modules/next/dist/bin/next \
-                      --name ${APP_NAME} \
-                      -- start -p ${PORT} -H ${HOST} \
-                      --cwd ${APP_DIR} \
-                      -i 1
-                  fi
+        stage('Start/Reload PM2 Cluster') {
+            steps {
+                sh """
+                echo "Starting or reloading FIRMS_UI with PM2 cluster on port ${PORT}..."
+                if pm2 list | grep ${APP_NAME}; then
+                    # Zero-downtime reload
+                    pm2 reload ${APP_NAME}
+                else
+                    # Start in cluster mode using all CPU cores
+                    pm2 start serve --name ${APP_NAME} -- ${DEPLOY_PATH} -s -l ${PORT} -p ${PORT} -n $(nproc)
+                fi
+                pm2 save
+                """
+            }
+        }
 
-                  pm2 save
-                  pm2 status
-                '''
+        stage('Verify Deployment') {
+            steps {
+                sh """
+                echo "Verifying FIRMS_UI deployment..."
+                sleep 5
+                curl -I http://localhost:${PORT}
+                """
             }
         }
     }
 
     post {
+        success {
+            echo "🔥 FIRMS_UI Deployment Successful on port ${PORT} with PM2 Cluster!"
+        }
         failure {
-            echo "❌ Build failed. Attempting to revert to last successful commit..."
-
-            sh '''
-              if [ -n "$GIT_PREVIOUS_SUCCESSFUL_COMMIT" ]; then
-                echo "Reverting to commit: $GIT_PREVIOUS_SUCCESSFUL_COMMIT"
-                git fetch --all
-                git checkout $GIT_PREVIOUS_SUCCESSFUL_COMMIT
-
-                npm install
-                npm run build
-
-                export PM2_HOME=${PM2_HOME}
-
-                if pm2 describe ${APP_NAME} > /dev/null; then
-                  pm2 restart ${APP_NAME}
-                else
-                  pm2 start node_modules/next/dist/bin/next \
-                    --name ${APP_NAME} \
-                    -- start -p ${PORT} -H ${HOST} \
-                    --cwd ${APP_DIR} \
-                    -i 1
-                fi
-
-                pm2 save
-              else
-                echo "⚠ No previous successful build found. Cannot revert."
-              fi
-            '''
-            echo "🚨 Revert process completed."
+            echo "❌ FIRMS_UI Deployment Failed!"
         }
     }
 }
-
