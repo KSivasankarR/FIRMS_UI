@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'
+        nodejs 'Node16' // Node version >=16.10 or 18+
     }
 
     environment {
@@ -17,24 +17,28 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo "Cloning repository..."
                 git branch: 'main', url: "${REPO_URL}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
+                echo "Installing npm dependencies..."
                 sh 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'npm run build && npm run export'
+                echo "Building Next.js application..."
+                sh 'npm run build'
             }
         }
 
         stage('Backup Previous Deploy') {
             steps {
+                echo "Backing up previous deployment..."
                 sh """
                 mkdir -p ${BACKUP_PATH}
                 if [ -d "${DEPLOY_PATH}" ]; then
@@ -48,16 +52,20 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                echo "Deploying the application..."
                 sh """
                 mkdir -p ${DEPLOY_PATH}
-                rsync -av --exclude='.git' ./out/ ${DEPLOY_PATH}/
 
-                # Use PM2 to serve static files
-                if pm2 list | grep -q ${APP_NAME}; then
-                    pm2 restart ${APP_NAME}
-                else
-                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
-                fi
+                # Copy all files to deploy path
+                rsync -av --exclude='.git' ./ ${DEPLOY_PATH}/
+
+                cd ${DEPLOY_PATH}
+
+                # Stop previous PM2 process
+                pm2 delete ${APP_NAME} || true
+
+                # Start Next.js server with PM2
+                pm2 start npm --name "${APP_NAME}" -- start
 
                 pm2 save
                 """
@@ -66,6 +74,7 @@ pipeline {
 
         stage('Verify Deployment') {
             steps {
+                echo "Verifying deployment..."
                 sh """
                 RETRIES=5
                 COUNT=0
@@ -77,6 +86,7 @@ pipeline {
                         exit 1
                     fi
                 done
+                echo "App is running on port ${PORT}"
                 """
             }
         }
@@ -93,7 +103,9 @@ pipeline {
             if [ -n "\$LAST_BACKUP" ]; then
                 rm -rf ${DEPLOY_PATH}
                 mv ${BACKUP_PATH}/\$LAST_BACKUP ${DEPLOY_PATH}
-                pm2 restart ${APP_NAME} || pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
+                cd ${DEPLOY_PATH}
+                pm2 delete ${APP_NAME} || true
+                pm2 start npm --name "${APP_NAME}" -- start
                 pm2 save
             fi
             """
