@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'  // Make sure Node16 is configured in Jenkins
+        nodejs 'Node16'
     }
 
     environment {
@@ -13,6 +13,7 @@ pipeline {
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
         BACKUP_KEEP = 5
         NODE_ENV = "production"
+        WATCH_MODE = "true"  // Set "true" to enable PM2 watch
     }
 
     stages {
@@ -39,7 +40,7 @@ pipeline {
                 echo "Building Next.js CSR/static export..."
                 sh '''
                     npm run build --verbose
-                    npm run export -- -o out   # Export static files to ./out
+                    npm run export -- -o out
                 '''
             }
         }
@@ -52,7 +53,6 @@ pipeline {
                     if [ -d "${DEPLOY_PATH}" ]; then
                         mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_$(date +%F_%H-%M-%S)
                     fi
-                    # Keep only last ${BACKUP_KEEP} backups
                     ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
                 '''
             }
@@ -66,11 +66,13 @@ pipeline {
                     rm -rf ${DEPLOY_PATH}/*
                     rsync -av --exclude='.git' --exclude='node_modules' ./out/ ${DEPLOY_PATH}/
 
-                    # Stop previous PM2 process if exists
                     pm2 delete ${APP_NAME} || true
 
-                    # Start serve to serve static files
-                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
+                    if [ "${WATCH_MODE}" = "true" ]; then
+                        pm2 start serve --name "${APP_NAME}" --watch -- -s ${DEPLOY_PATH} -l ${PORT}
+                    else
+                        pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
+                    fi
 
                     pm2 save
                 '''
