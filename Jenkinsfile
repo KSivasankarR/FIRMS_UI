@@ -1,58 +1,81 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'Node16'
+    }
+
     environment {
-        APP_NAME = "FIRMS_UI"
-        APP_DIR  = "/var/lib/jenkins//FIRMS_UI"
+        PORT = '3008'
+        HOST = '0.0.0.0'
+        APP_NAME = 'FIRMS_UI'
+        APP_DIR = "${WORKSPACE}"
+        PM2_HOME = '/var/lib/jenkins/.pm2'
     }
 
     stages {
 
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh '''
-                cd $APP_DIR
-                npm install
-                '''
+                sh 'npm ci --legacy-peer-deps'
             }
         }
 
-        stage('Build Application') {
+        stage('Clean Workspace') {
+            steps {
+                sh 'rm -rf .next'
+            }
+        }
+
+        stage('Build App') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Deploy with PM2') {
             steps {
                 sh '''
-                cd $APP_DIR
-                npm run build
+                  export PM2_HOME=${PM2_HOME}
+
+                  if pm2 describe ${APP_NAME} > /dev/null; then
+                    echo "Restarting app..."
+                    pm2 restart ${APP_NAME}
+                  else
+                    echo "Starting app..."
+                    pm2 start npm --name ${APP_NAME} -- start
+                  fi
+
+                  pm2 save
+                  pm2 status
                 '''
             }
         }
 
-        stage('Start or Reload PM2') {
-            steps {
-                sh '''
-                cd $APP_DIR
-
-                pm2 describe $APP_NAME > /dev/null
-
-                if [ $? -ne 0 ]; then
-                    echo "Starting new PM2 process..."
-                    pm2 start ecosystem.config.js
-                else
-                    echo "Reloading existing PM2 process..."
-                    pm2 reload $APP_NAME
-                fi
-
-                pm2 save
-                '''
-            }
-        }
-    }
+    }  // ✅ THIS WAS MISSING (closes stages)
 
     post {
-        success {
-            echo "Deployment Successful!"
-        }
         failure {
-            echo "Deployment Failed!"
+            echo "❌ Build failed. Attempting rollback..."
+
+            sh '''
+              if [ -n "$GIT_PREVIOUS_SUCCESSFUL_COMMIT" ]; then
+                git fetch --all
+                git checkout $GIT_PREVIOUS_SUCCESSFUL_COMMIT
+                npm ci --legacy-peer-deps
+                npm run build
+                pm2 restart ${APP_NAME}
+                pm2 save
+              else
+                echo "⚠ No previous successful build found."
+              fi
+            '''
         }
     }
 }
