@@ -13,7 +13,7 @@ pipeline {
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
         BACKUP_KEEP = 5
         NODE_ENV = "production"
-        HUSKY_SKIP_INSTALL = "1" // Prevent Husky from running hooks in CI
+        HUSKY_SKIP_INSTALL = "1" // Prevent Husky hooks from running in CI
     }
 
     stages {
@@ -71,7 +71,7 @@ pipeline {
 
                     cd ${DEPLOY_PATH}
 
-                    # Stop existing PM2 process if it exists
+                    # Stop previous PM2 process if it exists
                     pm2 delete ${APP_NAME} || true
 
                     # Start app in cluster mode, auto-restart enabled, same name
