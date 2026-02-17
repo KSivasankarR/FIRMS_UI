@@ -25,14 +25,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo "Installing npm dependencies..."
-                sh 'npm install'
+                sh 'set -e; npm install'
             }
         }
 
         stage('Build') {
             steps {
                 echo "Building Next.js application..."
-                sh 'npm run build'
+                sh 'set -e; npm run build'
             }
         }
 
@@ -40,9 +40,12 @@ pipeline {
             steps {
                 echo "Backing up previous deployment..."
                 sh """
+                    set -e
                     mkdir -p ${BACKUP_PATH}
                     if [ -d "${DEPLOY_PATH}" ]; then
-                        mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
+                        BACKUP_NAME=${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
+                        echo "Moving current deployment to backup: \$BACKUP_NAME"
+                        mv ${DEPLOY_PATH} ${BACKUP_PATH}/\$BACKUP_NAME
                     fi
                     # Keep only last ${BACKUP_KEEP} backups
                     ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
@@ -54,22 +57,22 @@ pipeline {
             steps {
                 echo "Deploying application..."
                 sh """
+                    set -e
                     mkdir -p ${DEPLOY_PATH}
-                    # Clean deploy folder
+                    echo "Cleaning deploy folder..."
                     rm -rf ${DEPLOY_PATH}/*
 
-                    # Copy project files (exclude node_modules and .git)
+                    echo "Copying project files..."
                     rsync -av --exclude='.git' --exclude='node_modules' ./ ${DEPLOY_PATH}/
 
                     cd ${DEPLOY_PATH}
 
-                    # Stop existing PM2 process if running
+                    echo "Stopping existing PM2 process if any..."
                     pm2 delete ${APP_NAME} || true
 
-                    # Start Next.js SSR server
+                    echo "Starting Next.js SSR server..."
                     pm2 start npm --name "${APP_NAME}" -- start
 
-                    # Save PM2 process list
                     pm2 save
                 """
             }
@@ -79,6 +82,7 @@ pipeline {
             steps {
                 echo "Verifying deployment..."
                 sh """
+                    set -e
                     RETRIES=5
                     COUNT=0
                     until curl -s --head http://localhost:${PORT} | grep "200 OK"; do
@@ -103,6 +107,7 @@ pipeline {
         failure {
             echo "Deployment failed! Rolling back to last backup..."
             sh """
+                set -e
                 LAST_BACKUP=\$(ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | tail -n 1)
                 if [ -n "\$LAST_BACKUP" ]; then
                     echo "Restoring backup \$LAST_BACKUP..."
