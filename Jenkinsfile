@@ -1,15 +1,18 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'Node16' // Name of NodeJS installation in Jenkins (configure in Jenkins > Global Tool Configuration)
+    }
+
     environment {
         APP_NAME = "FIRMS_UI"
         DEPLOY_PATH = "/var/lib/jenkins/FIRMS_UI"
-        NODE_VERSION = "16"
         PORT = "3008"
         REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI"
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
-        WATCH_MODE = "false" // set "true" if you want pm2 to watch file changes
-        BACKUP_KEEP=5       // number of backups to keep
+        WATCH_MODE = "false"   // Set to "true" to enable pm2 watch
+        BACKUP_KEEP = 5        // Number of backups to keep
     }
 
     stages {
@@ -17,20 +20,6 @@ pipeline {
             steps {
                 echo "Cloning repository..."
                 git branch: 'main', url: "${REPO_URL}"
-            }
-        }
-
-        stage('Setup Node') {
-            steps {
-                echo "Setting up Node version ${NODE_VERSION}"
-                sh '''
-                export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                nvm install ${NODE_VERSION}
-                nvm use ${NODE_VERSION}
-                node -v
-                npm -v
-                '''
             }
         }
 
@@ -57,7 +46,7 @@ pipeline {
                     mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
                 fi
 
-                # Rotate backups, keep only last ${BACKUP_KEEP} backups
+                # Rotate old backups, keep last ${BACKUP_KEEP}
                 ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -d '\\n' rm -rf --
                 """
             }
@@ -69,17 +58,12 @@ pipeline {
                 sh """
                 mkdir -p ${DEPLOY_PATH}
 
-                # Load nvm and Node
-                export NVM_DIR="\$HOME/.nvm"
-                [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
-                nvm use ${NODE_VERSION}
-
                 # Copy build folder to deploy path
                 rsync -av --exclude='.git' ./build/ ${DEPLOY_PATH}/
 
                 cd ${DEPLOY_PATH}
 
-                # Start or restart app with pm2, single process
+                # Start or restart pm2 single process
                 if pm2 list | grep -q ${APP_NAME}; then
                     pm2 restart ${APP_NAME} --update-env
                 else
