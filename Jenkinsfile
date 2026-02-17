@@ -105,7 +105,24 @@ pipeline {
             echo "Deployment completed successfully!"
         }
         failure {
-            echo "Deployment failed!"
+            echo "Deployment failed! Rolling back to last backup..."
+            sh """
+            LAST_BACKUP=\$(ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | tail -n 1)
+            if [ -n "\$LAST_BACKUP" ]; then
+                echo "Restoring backup \$LAST_BACKUP..."
+                rm -rf ${DEPLOY_PATH}
+                mv ${BACKUP_PATH}/\$LAST_BACKUP ${DEPLOY_PATH}
+                cd ${DEPLOY_PATH}
+                if pm2 list | grep -q ${APP_NAME}; then
+                    pm2 restart ${APP_NAME} --update-env
+                else
+                    pm2 start npm --name "${APP_NAME}" -- start
+                fi
+                pm2 save
+            else
+                echo "No backup found to restore!"
+            fi
+            """
         }
     }
 }
