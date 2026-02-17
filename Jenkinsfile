@@ -42,6 +42,7 @@ pipeline {
                     echo "Backing up previous build..."
                     TIMESTAMP=$(date +%Y%m%d%H%M%S)
                     cp -r ${DEPLOY_PATH} ${DEPLOY_PATH}_backup_${TIMESTAMP}
+                    echo ${DEPLOY_PATH}_backup_${TIMESTAMP} > last_backup.txt
                 fi
                 '''
             }
@@ -63,11 +64,9 @@ pipeline {
                 sh '''
                 echo "Starting or reloading FIRMS_UI with PM2 cluster on port ${PORT}..."
                 if pm2 list | grep ${APP_NAME}; then
-                    # Zero-downtime reload
-                    pm2 reload ${APP_NAME}
+                    pm2 reload ${APP_NAME} || exit 1
                 else
-                    # Start in cluster mode using all CPU cores
-                    pm2 start serve --name ${APP_NAME} -- ${DEPLOY_PATH} -s -l ${PORT} -p ${PORT} -n $(nproc)
+                    pm2 start serve --name ${APP_NAME} -- ${DEPLOY_PATH} -s -l ${PORT} -p ${PORT} -n $(nproc) || exit 1
                 fi
                 pm2 save
                 '''
@@ -79,7 +78,7 @@ pipeline {
                 sh '''
                 echo "Verifying FIRMS_UI deployment..."
                 sleep 5
-                curl -I http://localhost:${PORT}
+                curl -I http://localhost:${PORT} || exit 1
                 '''
             }
         }
@@ -90,7 +89,18 @@ pipeline {
             echo "🔥 FIRMS_UI Deployment Successful on port ${PORT} with PM2 Cluster!"
         }
         failure {
-            echo "❌ FIRMS_UI Deployment Failed!"
+            echo "❌ Deployment Failed! Rolling back..."
+            sh '''
+            if [ -f last_backup.txt ]; then
+                BACKUP=$(cat last_backup.txt)
+                echo "Restoring backup: $BACKUP"
+                rm -rf ${DEPLOY_PATH}/*
+                cp -r $BACKUP/* ${DEPLOY_PATH}/
+                pm2 reload ${APP_NAME} || echo "PM2 reload failed during rollback"
+            else
+                echo "No backup found to rollback!"
+            fi
+            '''
         }
     }
 }
