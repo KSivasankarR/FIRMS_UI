@@ -2,120 +2,104 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'  // Ensure Node16 is installed on Jenkins (>=16.10)
+        nodejs 'Node16' // Make sure this matches your Jenkins NodeJS tool name
     }
 
     environment {
-        APP_NAME = 'FIRMS_UI'
-        DEPLOY_PATH = '/var/lib/jenkins/FIRMS_UI'
-        BACKUP_PATH = '/var/lib/jenkins/FIRMS_UI_backup'
-        BACKUP_KEEP = 5
         PORT = '3008'
-        HOST = '10.10.120.190'
+        HOST = '0.0.0.0'
+        APP_NAME = 'notary-fe'
+        APP_DIR = '/var/lib/jenkins/.jenkins/workspace/FIRMSFRONTEND'
         PM2_HOME = '/var/lib/jenkins/.pm2'
     }
 
     stages {
-        stage('Checkout') {
+
+        stage('Checkout SCM') {
             steps {
-                git branch: 'main', url: 'https://github.com/KSivasankarR/FIRMS_UI'
+                checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh '''
-                    export HUSKY_SKIP_INSTALL=1
-                    node -v
-                    npm -v
-                    npm install --legacy-peer-deps --verbose
-                '''
+                sh 'npm install --force'
             }
         }
 
-        stage('Build') {
+        stage('Lint') {
             steps {
-                sh 'npm run build --verbose'
+                sh 'npm run lint'
             }
         }
 
-        stage('Backup Previous Deploy') {
+        stage('Clean Workspace') {
             steps {
-                sh '''
-                    mkdir -p ${BACKUP_PATH}
-                    if [ -d "${DEPLOY_PATH}" ]; then
-                        mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_$(date +%F_%H-%M-%S)
-                    fi
-                    ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
-                '''
+                sh 'rm -rf .next'
             }
         }
 
-        stage('Deploy') {
+        stage('Build App') {
             steps {
-                sh """
-                    mkdir -p ${DEPLOY_PATH}
-                    rm -rf ${DEPLOY_PATH}/*
-
-                    # Copy project files (exclude node_modules and .git)
-                    rsync -av --exclude='.git' --exclude='node_modules' ./ ${DEPLOY_PATH}/
-
-                    export PM2_HOME=${PM2_HOME}
-                    cd ${DEPLOY_PATH}
-
-                    # Start or reload app in PM2 cluster mode
-                    if pm2 describe ${APP_NAME} > /dev/null; then
-                        pm2 reload ${APP_NAME} --update-env
-                    else
-                        pm2 start npm --name \"${APP_NAME}\" -- run start -- -p ${PORT} -H ${HOST} -i max
-                    fi
-
-                    pm2 save
-                    pm2 status
-                """
+                sh 'npm run build'
             }
         }
 
-        stage('Verify Deployment') {
+        stage('Deploy with PM2') {
             steps {
                 sh '''
-                    RETRIES=8
-                    COUNT=0
-                    until curl -s --head http://${HOST}:${PORT} | grep "200 OK"; do
-                        COUNT=$((COUNT+1))
-                        echo "Waiting for app to start... Attempt $COUNT"
-                        sleep 5
-                        if [ $COUNT -ge $RETRIES ]; then
-                            echo "App failed to respond after $RETRIES attempts"
-                            exit 1
-                        fi
-                    done
-                    echo "App is running on port ${PORT}"
+                  export PM2_HOME=${PM2_HOME}
+
+                  if pm2 describe ${APP_NAME} > /dev/null; then
+                    echo "App exists. Restarting..."
+                    pm2 restart ${APP_NAME}
+                  else
+                    echo "App not found. Starting fresh instance..."
+                    pm2 start node_modules/next/dist/bin/next \
+                      --name ${APP_NAME} \
+                      -- start -p ${PORT} -H ${HOST} \
+                      --cwd ${APP_DIR} \
+                      -i 1
+                  fi
+
+                  pm2 save
+                  pm2 status
                 '''
             }
         }
     }
 
     post {
-        success {
-            echo "✅ Deployment completed successfully!"
-        }
         failure {
-            echo "❌ Deployment failed! Attempting rollback..."
+            echo "❌ Build failed. Attempting to revert to last successful commit..."
+
             sh '''
-                LAST_BACKUP=$(ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | tail -n 1)
-                if [ -n "$LAST_BACKUP" ]; then
-                    echo "Restoring backup $LAST_BACKUP..."
-                    rm -rf ${DEPLOY_PATH}
-                    mv ${BACKUP_PATH}/$LAST_BACKUP ${DEPLOY_PATH}
-                    export PM2_HOME=${PM2_HOME}
-                    pm2 delete ${APP_NAME} || true
-                    pm2 start npm --name \"${APP_NAME}\" -- run start -- -p ${PORT} -H ${HOST} -i max
-                    pm2 save
+              if [ -n "$GIT_PREVIOUS_SUCCESSFUL_COMMIT" ]; then
+                echo "Reverting to commit: $GIT_PREVIOUS_SUCCESSFUL_COMMIT"
+                git fetch --all
+                git checkout $GIT_PREVIOUS_SUCCESSFUL_COMMIT
+
+                npm install
+                npm run build
+
+                export PM2_HOME=${PM2_HOME}
+
+                if pm2 describe ${APP_NAME} > /dev/null; then
+                  pm2 restart ${APP_NAME}
                 else
-                    echo "No backup found to restore!"
+                  pm2 start node_modules/next/dist/bin/next \
+                    --name ${APP_NAME} \
+                    -- start -p ${PORT} -H ${HOST} \
+                    --cwd ${APP_DIR} \
+                    -i 1
                 fi
+
+                pm2 save
+              else
+                echo "⚠ No previous successful build found. Cannot revert."
+              fi
             '''
+            echo "🚨 Revert process completed."
         }
     }
 }
