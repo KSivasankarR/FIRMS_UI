@@ -11,7 +11,7 @@ pipeline {
         PORT = "3008"
         REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI"
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
-        BACKUP_KEEP = 5
+        BACKUP_KEEP = 3
         NODE_ENV = "production"
         WATCH_MODE = "true"  // Set "true" to enable PM2 watch
     }
