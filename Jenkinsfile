@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16' // Name of NodeJS installation in Jenkins (configure in Jenkins > Global Tool Configuration)
+        nodejs 'Node16' // Make sure this NodeJS installation exists in Jenkins Global Tool Configuration
     }
 
     environment {
@@ -11,7 +11,7 @@ pipeline {
         PORT = "3008"
         REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI"
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
-        WATCH_MODE = "false"   // Set to "true" to enable pm2 watch
+        WATCH_MODE = "false"   // Set "true" to enable pm2 watch
         BACKUP_KEEP = 5        // Number of backups to keep
     }
 
@@ -46,7 +46,7 @@ pipeline {
                     mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
                 fi
 
-                # Rotate old backups, keep last ${BACKUP_KEEP}
+                # Keep only last ${BACKUP_KEEP} backups
                 ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -d '\\n' rm -rf --
                 """
             }
