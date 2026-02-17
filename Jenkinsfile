@@ -8,6 +8,8 @@ pipeline {
         PORT = "3008"
         REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI"
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
+        WATCH_MODE = "false" // set "true" if you want pm2 to watch file changes
+        BACKUP_KEEP=5       // number of backups to keep
     }
 
     stages {
@@ -50,10 +52,13 @@ pipeline {
             steps {
                 echo "Backing up previous deployment..."
                 sh """
+                mkdir -p ${BACKUP_PATH}
                 if [ -d "${DEPLOY_PATH}" ]; then
-                    mkdir -p ${BACKUP_PATH}
                     mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
                 fi
+
+                # Rotate backups, keep only last ${BACKUP_KEEP} backups
+                ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -d '\\n' rm -rf --
                 """
             }
         }
@@ -74,11 +79,15 @@ pipeline {
 
                 cd ${DEPLOY_PATH}
 
-                # Start or restart app with pm2, single process, auto-restart
+                # Start or restart app with pm2, single process
                 if pm2 list | grep -q ${APP_NAME}; then
                     pm2 restart ${APP_NAME} --update-env
                 else
-                    pm2 start npm --name "${APP_NAME}" -- start --watch
+                    if [ "${WATCH_MODE}" = "true" ]; then
+                        pm2 start npm --name "${APP_NAME}" -- start --watch
+                    else
+                        pm2 start npm --name "${APP_NAME}" -- start
+                    fi
                 fi
 
                 pm2 save
