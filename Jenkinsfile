@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16' // Node version >=16.10 or 18+
+        nodejs 'Node16'
     }
 
     environment {
@@ -17,34 +17,29 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Cloning repository..."
                 git branch: 'main', url: "${REPO_URL}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                echo "Installing npm dependencies..."
                 sh 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                echo "Building Next.js application..."
                 sh 'npm run build'
             }
         }
 
         stage('Backup Previous Deploy') {
             steps {
-                echo "Backing up previous deployment..."
                 sh """
                 mkdir -p ${BACKUP_PATH}
                 if [ -d "${DEPLOY_PATH}" ]; then
                     mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
                 fi
-                # Keep only last ${BACKUP_KEEP} backups
                 ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
                 """
             }
@@ -52,19 +47,20 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying the application..."
                 sh """
                 mkdir -p ${DEPLOY_PATH}
+                # Clean deploy folder before copy
+                rm -rf ${DEPLOY_PATH}/*
 
-                # Copy all files to deploy path
-                rsync -av --exclude='.git' ./ ${DEPLOY_PATH}/
+                # Copy project files to deploy folder (exclude node_modules and .git)
+                rsync -av --exclude='.git' --exclude='node_modules' ./ ${DEPLOY_PATH}/
 
                 cd ${DEPLOY_PATH}
 
                 # Stop previous PM2 process
                 pm2 delete ${APP_NAME} || true
 
-                # Start Next.js server with PM2
+                # Start Next.js SSR server
                 pm2 start npm --name "${APP_NAME}" -- start
 
                 pm2 save
@@ -74,7 +70,6 @@ pipeline {
 
         stage('Verify Deployment') {
             steps {
-                echo "Verifying deployment..."
                 sh """
                 RETRIES=5
                 COUNT=0
