@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'  // Node >=16.10 or 18+
+        nodejs 'Node16'  // Ensure Node16 is configured in Jenkins
     }
 
     environment {
@@ -12,6 +12,8 @@ pipeline {
         REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI"
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
         BACKUP_KEEP = 5
+        NODE_ENV = "production"          // Required for Next.js build
+        # NEXT_PUBLIC_* env variables can be added here if needed
     }
 
     stages {
@@ -26,9 +28,7 @@ pipeline {
             steps {
                 echo "Installing npm dependencies..."
                 sh '''
-                    echo "Node version:"
                     node -v
-                    echo "NPM version:"
                     npm -v
                     npm install --verbose
                 '''
@@ -37,9 +37,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "Building Next.js application..."
+                echo "Building Next.js CSR application..."
                 sh '''
                     npm run build --verbose
+                    npm run export -- -o out  # Export static files to ./out
                 '''
             }
         }
@@ -64,12 +65,14 @@ pipeline {
                 sh '''
                     mkdir -p ${DEPLOY_PATH}
                     rm -rf ${DEPLOY_PATH}/*
-                    rsync -av --exclude='.git' --exclude='node_modules' ./ ${DEPLOY_PATH}/
+                    rsync -av --exclude='.git' --exclude='node_modules' ./out/ ${DEPLOY_PATH}/
 
-                    cd ${DEPLOY_PATH}
-
+                    # Stop previous PM2 process
                     pm2 delete ${APP_NAME} || true
-                    pm2 start npm --name "${APP_NAME}" -- start
+
+                    # Start the app with PM2 (serve static files)
+                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
+
                     pm2 save
                 '''
             }
@@ -101,7 +104,20 @@ pipeline {
             echo "Deployment completed successfully!"
         }
         failure {
-            echo "Deployment failed! Check logs above for details."
+            echo "Deployment failed! Rolling back to last backup..."
+            sh '''
+                LAST_BACKUP=$(ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | tail -n 1)
+                if [ -n "$LAST_BACKUP" ]; then
+                    echo "Restoring backup $LAST_BACKUP..."
+                    rm -rf ${DEPLOY_PATH}
+                    mv ${BACKUP_PATH}/$LAST_BACKUP ${DEPLOY_PATH}
+                    pm2 delete ${APP_NAME} || true
+                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
+                    pm2 save
+                else
+                    echo "No backup found to restore!"
+                fi
+            '''
         }
     }
 }
