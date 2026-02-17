@@ -8,8 +8,8 @@
   "license": "Critical River Inc.",
   "scripts": {
     "dev": "next -p 3008",
-    "build": "next build && next export",
-    "start": "next start -p 3008",
+    "build": "next build",
+    "start": "next start -p 3008 -H 0.0.0.0",
     "type-check": "tsc",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
