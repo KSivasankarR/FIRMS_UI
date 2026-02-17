@@ -1,0 +1,77 @@
+{
+  "name": "fasp-application",
+  "description": "",
+  "version": "1.0.0",
+  "private": true,
+  "proxy": "https://117.254.87.83:8091",
+  "author": "",
+  "license": "Critical River Inc.",
+  "scripts": {
+    "dev": "next -p 3008",
+    "build": "next build && next export",
+    "start": "next start -p 3008",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "postinstall": "husky install",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 100
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,jsx,tsx}": [
+      "eslint --ignore-path .gitignore --fix",
+      "prettier --ignore-path .gitignore --write"
+    ]
+  },
+  "dependencies": {
+    "@hookform/resolvers": "2.9.8",
+    "@reduxjs/toolkit": "1.8.5",
+    "@types/lodash": "4.14.192",
+    "@types/react-router": "5.1.19",
+    "axios": "1.3.3",
+    "bootstrap": "5.2.1",
+    "crypto-js": "4.1.1",
+    "dotenv": "16.0.3",
+    "jest-environment-jsdom": "29.1.2",
+    "jsbarcode": "3.11.5",
+    "lodash": "4.17.21",
+    "moment": "2.29.4",
+    "next": "12.3.1",
+    "pnpm": "7.26.2",
+    "react": "18.2.0",
+    "react-bootstrap": "2.5.0",
+    "react-datepicker": "4.11.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "7.36.1",
+    "react-icons": "4.8.0",
+    "react-redux": "8.0.4",
+    "react-router-dom": "6.8.1",
+    "react-to-pdf": "0.0.14",
+    "sass": "1.55.0",
+    "sweetalert2": "11.7.2"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "4.1.1",
+    "@types/node": "16.11.59",
+    "@types/react": "18.0.21",
+    "@types/react-datepicker": "4.11.2",
+    "@types/react-dom": "18.0.6",
+    "@typescript-eslint/eslint-plugin": "5.38.0",
+    "@typescript-eslint/parser": "5.38.0",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.5.1",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "8.0.3",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
+    "typescript": "4.8.3"
+  }
+}

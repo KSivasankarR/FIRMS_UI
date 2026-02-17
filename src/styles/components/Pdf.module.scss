@@ -1,0 +1,38 @@
+
+.iframeWrapper {
+    overflow: auto;
+    width: 100%;
+    // height: 500px;
+  }
+
+
+.iframe {
+    /* Remove border */
+    border: none;
+    
+    /* Disable right-click */
+    // pointer-events: none;
+    
+    /* Center the iframe */
+    display: block;
+    margin: 0 auto;
+    
+    /* Attractive styling */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 80%; /* Adjust the width as needed */
+    height: 500px; /* Adjust the height as needed */
+    
+    /* Add some extra styling */
+    background-color: #f7f7f7; /* Light gray background */
+    padding: 10px; /* Add some padding */
+    border: 1px solid #ddd; /* Light gray border */
+    
+    /* Add a hover effect */
+    transition: box-shadow 0.3s ease;
+    hover: {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  
