@@ -8,7 +8,7 @@ const securityHeaders = [
   },
   // {
   //   key: 'Content-Security-Policy',
-  //   value: `default-src 'self' 'unsafe-inline' 'unsafe-eval' http://103.174.56.65:3008 http://localhost:4000 http://103.174.56.65:4000 http://103.174.56.169:8091 http://117.254.87.83:8091 https://registration.ap.gov.in; child-src http://103.174.56.65:3008 http://localhost:3008 http://localhost:4000 http://103.174.56.169:8091 http://103.174.56.65:4000 http://117.254.87.83:8091 https://registration.ap.gov.in; style-src 'self' 'unsafe-inline' http://103.174.56.65:3008 http://103.174.56.169:8091 http://117.254.87.83:8091 http://103.174.56.65:4000 https://registration.ap.gov.in https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' 'unsafe-inline' https://fonts.gstatic.com; img-src * 'self' data: https:; frame-src 'self' blob:;`
+  //   value: `default-src 'self' 'unsafe-inline' 'unsafe-eval' http://10.10.120.190:3008 http://localhost:4000 http://10.10.120.190:4000 http://10.10.120.6:8091; child-src http://10.10.120.190:3008 http://localhost:3008 http://localhost:4000 http://10.10.120.6:8091 http://10.10.120.190:4000; style-src 'self' 'unsafe-inline' http://117.250.201.41:3008 http://10.10.120.6:8091 http://10.10.1120.190:4000 https://registration.ap.gov.in https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' 'unsafe-inline' https://fonts.gstatic.com; img-src * 'self' data: https:; frame-src 'self' blob:;`
   // },
   // {
   //   key: 'X-XSS-Protection',
