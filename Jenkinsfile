@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'  // Make sure Node16 tool is configured in Jenkins
+        nodejs 'Node16'  // Node16 must be configured in Jenkins
     }
 
     environment {
@@ -51,7 +51,6 @@ pipeline {
                     if [ -d "${DEPLOY_PATH}" ]; then
                         mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_$(date +%F_%H-%M-%S)
                     fi
-                    # Keep only last ${BACKUP_KEEP} backups
                     ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
                 '''
             }
@@ -67,12 +66,8 @@ pipeline {
 
                     cd ${DEPLOY_PATH}
 
-                    # Stop previous PM2 process if exists
                     pm2 delete ${APP_NAME} || true
-
-                    # Start Next.js SSR server with PM2
                     pm2 start npm --name "${APP_NAME}" -- start
-
                     pm2 save
                 '''
             }
