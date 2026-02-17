@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'  // Node16 must be configured in Jenkins
+        nodejs 'Node16'  // Make sure Node16 is configured in Jenkins
     }
 
     environment {
@@ -36,9 +36,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "Building Next.js SSR application..."
+                echo "Building Next.js CSR/static export..."
                 sh '''
                     npm run build --verbose
+                    npm run export -- -o out   # Export static files to ./out
                 '''
             }
         }
@@ -51,6 +52,7 @@ pipeline {
                     if [ -d "${DEPLOY_PATH}" ]; then
                         mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_$(date +%F_%H-%M-%S)
                     fi
+                    # Keep only last ${BACKUP_KEEP} backups
                     ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
                 '''
             }
@@ -58,16 +60,18 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying application..."
+                echo "Deploying static files..."
                 sh '''
                     mkdir -p ${DEPLOY_PATH}
                     rm -rf ${DEPLOY_PATH}/*
-                    rsync -av --exclude='.git' --exclude='node_modules' ./ ${DEPLOY_PATH}/
+                    rsync -av --exclude='.git' --exclude='node_modules' ./out/ ${DEPLOY_PATH}/
 
-                    cd ${DEPLOY_PATH}
-
+                    # Stop previous PM2 process if exists
                     pm2 delete ${APP_NAME} || true
-                    pm2 start npm --name "${APP_NAME}" -- start
+
+                    # Start serve to serve static files
+                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
+
                     pm2 save
                 '''
             }
@@ -106,9 +110,8 @@ pipeline {
                     echo "Restoring backup $LAST_BACKUP..."
                     rm -rf ${DEPLOY_PATH}
                     mv ${BACKUP_PATH}/$LAST_BACKUP ${DEPLOY_PATH}
-                    cd ${DEPLOY_PATH}
                     pm2 delete ${APP_NAME} || true
-                    pm2 start npm --name "${APP_NAME}" -- start
+                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
                     pm2 save
                 else
                     echo "No backup found to restore!"
