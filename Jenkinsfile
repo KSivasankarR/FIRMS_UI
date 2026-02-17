@@ -8,7 +8,6 @@ pipeline {
         APP_NAME = "FIRMS_UI"
         PORT = "3008"
         MAX_BACKUPS = "3"
-        # Safe variables for Next.js client-side
         NEXT_PUBLIC_BASE_URL = credentials('BASE_URL')
         NEXT_PUBLIC_BACKEND_URL = credentials('BACKEND_URL')
         NEXT_PUBLIC_PAYMENT_REDIRECT_URL = credentials('PAYMENT_REDIRECT_URL')
