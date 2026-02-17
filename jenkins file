@@ -29,6 +29,18 @@ pipeline {
             }
         }
 
+        stage('Backup Old Build') {
+            steps {
+                sh """
+                if [ -d ${DEPLOY_PATH} ]; then
+                    echo "Backing up previous build..."
+                    TIMESTAMP=\$(date +%Y%m%d%H%M%S)
+                    cp -r ${DEPLOY_PATH} ${DEPLOY_PATH}_backup_\${TIMESTAMP}
+                fi
+                """
+            }
+        }
+
         stage('Deploy Build') {
             steps {
                 sh """
@@ -44,11 +56,10 @@ pipeline {
             steps {
                 sh """
                 echo "Starting or reloading FIRMS_UI with PM2 cluster on port ${PORT}..."
+                # Check if PM2 app exists
                 if pm2 list | grep ${APP_NAME}; then
-                    # Zero-downtime reload
                     pm2 reload ${APP_NAME}
                 else
-                    # Start in cluster mode using all CPU cores
                     pm2 start serve --name ${APP_NAME} -- ${DEPLOY_PATH} -s -l ${PORT} -p ${PORT} -n $(nproc)
                 fi
                 pm2 save
