@@ -19,61 +19,68 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh '''
+                echo "Installing Node.js dependencies..."
+                npm install
+                '''
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build'
+                sh '''
+                echo "Building React app..."
+                npm run build
+                '''
             }
         }
 
         stage('Backup Old Build') {
             steps {
-                sh """
+                sh '''
                 if [ -d ${DEPLOY_PATH} ]; then
                     echo "Backing up previous build..."
-                    TIMESTAMP=\$(date +%Y%m%d%H%M%S)
-                    cp -r ${DEPLOY_PATH} ${DEPLOY_PATH}_backup_\${TIMESTAMP}
+                    TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                    cp -r ${DEPLOY_PATH} ${DEPLOY_PATH}_backup_${TIMESTAMP}
                 fi
-                """
+                '''
             }
         }
 
         stage('Deploy Build') {
             steps {
-                sh """
-                echo "Deploying FIRMS_UI to ${DEPLOY_PATH}..."
+                sh '''
+                echo "Deploying new build to ${DEPLOY_PATH}..."
                 mkdir -p ${DEPLOY_PATH}
                 rm -rf ${DEPLOY_PATH}/*
                 cp -r build/* ${DEPLOY_PATH}/
-                """
+                '''
             }
         }
 
         stage('Start/Reload PM2 Cluster') {
             steps {
-                sh """
+                sh '''
                 echo "Starting or reloading FIRMS_UI with PM2 cluster on port ${PORT}..."
-                # Check if PM2 app exists
                 if pm2 list | grep ${APP_NAME}; then
+                    # Zero-downtime reload
                     pm2 reload ${APP_NAME}
                 else
+                    # Start in cluster mode using all CPU cores
                     pm2 start serve --name ${APP_NAME} -- ${DEPLOY_PATH} -s -l ${PORT} -p ${PORT} -n $(nproc)
                 fi
                 pm2 save
-                """
+                '''
             }
         }
 
         stage('Verify Deployment') {
             steps {
-                sh """
+                sh '''
                 echo "Verifying FIRMS_UI deployment..."
                 sleep 5
                 curl -I http://localhost:${PORT}
-                """
+                '''
             }
         }
     }
