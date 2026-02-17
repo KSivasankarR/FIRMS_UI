@@ -8,8 +8,8 @@ pipeline {
     environment {
         PORT = '3008'
         HOST = '0.0.0.0'
-        APP_NAME = 'notary-fe'
-        APP_DIR = '/var/lib/jenkins/.jenkins/workspace/FIRMSFRONTEND'
+        APP_NAME = 'FIRMS_UI'
+        APP_DIR = '/var/lib/jenkins/FIRMS_UI'
         PM2_HOME = '/var/lib/jenkins/.pm2'
     }
 
