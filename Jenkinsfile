@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16' // Make sure this NodeJS installation exists in Jenkins
+        nodejs 'Node16'
     }
 
     environment {
@@ -11,41 +11,36 @@ pipeline {
         PORT = "3008"
         REPO_URL = "https://github.com/KSivasankarR/FIRMS_UI"
         BACKUP_PATH = "/var/lib/jenkins/FIRMS_UI_backup"
-        WATCH_MODE = "false"   // Set "true" to enable pm2 watch
-        BACKUP_KEEP = 5        // Number of backups to keep
+        BACKUP_KEEP = 5
     }
 
     stages {
         stage('Checkout') {
             steps {
-                echo "Cloning repository..."
                 git branch: 'main', url: "${REPO_URL}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                echo "Installing npm dependencies..."
                 sh 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                echo "Building the Next.js application..."
-                sh 'npm run build && npm run export' // output goes to ./out/
+                sh 'npm run build && npm run export'
             }
         }
 
         stage('Backup Previous Deploy') {
             steps {
-                echo "Backing up previous deployment..."
                 sh """
                 mkdir -p ${BACKUP_PATH}
                 if [ -d "${DEPLOY_PATH}" ]; then
                     mv ${DEPLOY_PATH} ${BACKUP_PATH}/${APP_NAME}_backup_\$(date +%F_%H-%M-%S)
                 fi
-                # Rotate old backups, keep last ${BACKUP_KEEP}
+                # Keep only last ${BACKUP_KEEP} backups
                 ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | head -n -${BACKUP_KEEP} | xargs -r rm -rf
                 """
             }
@@ -53,24 +48,15 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying the application..."
                 sh """
                 mkdir -p ${DEPLOY_PATH}
-
-                # Copy exported static site from ./out to deploy path
                 rsync -av --exclude='.git' ./out/ ${DEPLOY_PATH}/
 
-                cd ${DEPLOY_PATH}
-
-                # Start or restart pm2 process
+                # Use PM2 to serve static files
                 if pm2 list | grep -q ${APP_NAME}; then
-                    pm2 restart ${APP_NAME} --update-env
+                    pm2 restart ${APP_NAME}
                 else
-                    if [ "${WATCH_MODE}" = "true" ]; then
-                        pm2 start npm --name "${APP_NAME}" -- start --watch
-                    else
-                        pm2 start npm --name "${APP_NAME}" -- start
-                    fi
+                    pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
                 fi
 
                 pm2 save
@@ -80,7 +66,6 @@ pipeline {
 
         stage('Verify Deployment') {
             steps {
-                echo "Verifying deployment..."
                 sh """
                 RETRIES=5
                 COUNT=0
@@ -89,11 +74,9 @@ pipeline {
                     echo "Waiting for app to start... Attempt \$COUNT"
                     sleep 5
                     if [ \$COUNT -ge \$RETRIES ]; then
-                        echo "App failed to respond after \$RETRIES attempts"
                         exit 1
                     fi
                 done
-                echo "App is running on port ${PORT}"
                 """
             }
         }
@@ -108,18 +91,10 @@ pipeline {
             sh """
             LAST_BACKUP=\$(ls -1tr ${BACKUP_PATH} | grep ${APP_NAME}_backup_ | tail -n 1)
             if [ -n "\$LAST_BACKUP" ]; then
-                echo "Restoring backup \$LAST_BACKUP..."
                 rm -rf ${DEPLOY_PATH}
                 mv ${BACKUP_PATH}/\$LAST_BACKUP ${DEPLOY_PATH}
-                cd ${DEPLOY_PATH}
-                if pm2 list | grep -q ${APP_NAME}; then
-                    pm2 restart ${APP_NAME} --update-env
-                else
-                    pm2 start npm --name "${APP_NAME}" -- start
-                fi
+                pm2 restart ${APP_NAME} || pm2 start serve --name "${APP_NAME}" -- -s ${DEPLOY_PATH} -l ${PORT}
                 pm2 save
-            else
-                echo "No backup found to restore!"
             fi
             """
         }
