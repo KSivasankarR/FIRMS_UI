@@ -7,6 +7,7 @@ pipeline {
         DEPLOY_PATH = "/var/lib/jenkins/FIRMS_UI"
         APP_NAME = "FIRMS_UI"
         PORT = "3008"
+        MAX_BACKUPS = "3"
     }
 
     stages {
@@ -41,8 +42,17 @@ pipeline {
                 if [ -d ${DEPLOY_PATH} ]; then
                     echo "Backing up previous build..."
                     TIMESTAMP=$(date +%Y%m%d%H%M%S)
-                    cp -r ${DEPLOY_PATH} ${DEPLOY_PATH}_backup_${TIMESTAMP}
-                    echo ${DEPLOY_PATH}_backup_${TIMESTAMP} > last_backup.txt
+                    BACKUP_PATH=${DEPLOY_PATH}_backup_${TIMESTAMP}
+                    cp -r ${DEPLOY_PATH} $BACKUP_PATH
+                    echo $BACKUP_PATH > last_backup.txt
+
+                    # Remove oldest backups if more than MAX_BACKUPS exist
+                    BACKUPS=$(ls -dt ${DEPLOY_PATH}_backup_* | tail -n +$((MAX_BACKUPS+1)))
+                    if [ ! -z "$BACKUPS" ]; then
+                        echo "Removing old backups:"
+                        echo $BACKUPS
+                        rm -rf $BACKUPS
+                    fi
                 fi
                 '''
             }
