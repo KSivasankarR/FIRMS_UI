@@ -45,24 +45,24 @@ pipeline {
             }
         }
 
-        stage('Deploy with PM2') {
-            steps {
-                sh '''
-                export PM2_HOME=${PM2_HOME}
+stage('Deploy with PM2') {
+    steps {
+        sh '''
+        export PM2_HOME=${PM2_HOME}
 
-                if pm2 describe ${APP_NAME} > /dev/null; then
-                    echo "Restarting app..."
-                    pm2 restart ${APP_NAME}
-                else
-                    echo "Starting app..."
-                    pm2 start npm --name ${APP_NAME} -- start
-                fi
+        cd ${WORKSPACE}
 
-                pm2 save
-                pm2 status
-                '''
-            }
-        }
+        if pm2 describe ${APP_NAME} > /dev/null; then
+            pm2 restart ${APP_NAME}
+        else
+            pm2 start npm --name ${APP_NAME} -- start
+        fi
+
+        pm2 save
+        pm2 status
+        '''
+    }
+}
 
     }
 
