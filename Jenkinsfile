@@ -8,7 +8,7 @@ pipeline {
     environment {
         PORT = '3008'
         HOST = '0.0.0.0'
-        APP_NAME = 'FIRMS_FRONTEND_Siva'
+        APP_NAME = 'FIRMS_FRONTEND'
         APP_DIR = "/var/lib/jenkins/FIRMS/FIRMS_FRONTEND"
         PM2_HOME = '/var/lib/jenkins/FIRMS/FIRMS_FRONTEND/.pm2'
     }
