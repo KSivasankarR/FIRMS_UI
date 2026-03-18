@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node16'
+        nodejs 'Node18'
     }
 
     environment {
         PORT = '3008'
         HOST = '0.0.0.0'
-        APP_NAME = 'FIRMS_UI'
-        APP_DIR = "${WORKSPACE}"
-        PM2_HOME = '/var/lib/jenkins/.pm2'
+        APP_NAME = 'FIRMS_FRONTEND_Siva'
+        APP_DIR = "/var/lib/jenkins/FIRMS/FIRMS_FRONTEND"
+        PM2_HOME = '/var/lib/jenkins/FIRMS/FIRMS_FRONTEND/.pm2'
     }
 
     stages {
@@ -23,7 +23,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci --legacy-peer-deps'
+                sh '''
+                if [ -d "node_modules" ]; then
+                    echo "Dependencies already installed. Skipping..."
+                else
+                    npm install --legacy-peer-deps
+                fi
+                '''
             }
         }
 
@@ -42,39 +48,43 @@ pipeline {
         stage('Deploy with PM2') {
             steps {
                 sh '''
-                  export PM2_HOME=${PM2_HOME}
+                export PM2_HOME=${PM2_HOME}
 
-                  if pm2 describe ${APP_NAME} > /dev/null; then
+                if pm2 describe ${APP_NAME} > /dev/null; then
                     echo "Restarting app..."
                     pm2 restart ${APP_NAME}
-                  else
+                else
                     echo "Starting app..."
                     pm2 start npm --name ${APP_NAME} -- start
-                  fi
+                fi
 
-                  pm2 save
-                  pm2 status
+                pm2 save
+                pm2 status
                 '''
             }
         }
 
-    }  // ✅ THIS WAS MISSING (closes stages)
+    }
 
     post {
+        success {
+            echo "✅ Deployment successful!"
+        }
+
         failure {
             echo "❌ Build failed. Attempting rollback..."
 
             sh '''
-              if [ -n "$GIT_PREVIOUS_SUCCESSFUL_COMMIT" ]; then
+            if [ -n "$GIT_PREVIOUS_SUCCESSFUL_COMMIT" ]; then
                 git fetch --all
                 git checkout $GIT_PREVIOUS_SUCCESSFUL_COMMIT
-                npm ci --legacy-peer-deps
+                npm install --legacy-peer-deps
                 npm run build
                 pm2 restart ${APP_NAME}
                 pm2 save
-              else
+            else
                 echo "⚠ No previous successful build found."
-              fi
+            fi
             '''
         }
     }
